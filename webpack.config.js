@@ -37,6 +37,10 @@ module.exports = {
           limit: 10000,
           name: '[name].[ext]?[hash]'
         }
+      },
+      {
+        test: /\.css$/,
+        loader: "style-loader!css-loader"
       }
     ]
   },
