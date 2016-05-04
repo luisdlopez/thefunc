@@ -1,4 +1,3 @@
-let parsers = require('../../parsers');
 import fuzzy from 'fuzzy';
 import _ from 'lodash';
 import Vue from 'vue';

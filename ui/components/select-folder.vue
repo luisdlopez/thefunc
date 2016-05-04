@@ -16,8 +16,6 @@
 </template>
 
 <script>
-import { scanFolder } from '../vuex/actions';
-
 export default {
   data() {
     return {

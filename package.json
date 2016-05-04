@@ -3,7 +3,7 @@
   "nodejs": true,
   "node-remote": "http://localhost",
   "main": "index.html",
-  "node-main": "scanner/index.js",
+  "node-main": "services/index.js",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --hot | npm start",

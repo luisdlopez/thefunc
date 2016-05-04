@@ -8,12 +8,12 @@
 </template>
 
 <script>
-import SelectFolderComponent from './components/select-folder.vue';
-import SearchFunctionComponent from './components/search-function.vue';
-import SearchResultsComponent from './components/search-results.vue';
-import FunctionPreviewComponent from './components/function-preview.vue';
+import SelectFolderComponent from './select-folder.vue';
+import SearchFunctionComponent from './search-function.vue';
+import SearchResultsComponent from './search-results.vue';
+import FunctionPreviewComponent from './function-preview.vue';
 
-import { scanFolder, searchFunction, showPreview } from './vuex/actions';
+import { scanFolder, searchFunction, showPreview } from '../vuex/actions';
 
 export default {
   vuex: {
