@@ -19,7 +19,7 @@ export default {
         this.editor.session.setMode("ace/mode/javascript");
       },
       update: function(value) {
-        this.editor.setValue(value.content);
+        this.editor.setValue(value);
       }
     }
   }
@@ -30,7 +30,7 @@ export default {
 .function-preview-container {
   display: inline-block;
   vertical-align:top;
-  width: 60%;
+  width: 59%;
   height: calc(100% - 68px);
 }
 

@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <select-folder v-show="!scannedFolder"></select-folder>
-    <search-function v-if="scannedFolder"></search-function>
-    <search-results v-if="scannedFolder" :search-results="searchResults"></search-results>
-    <function-preview v-if="functionSelected" :function-selected="functionSelected"></function-preview>
+    <select-folder v-show="!scanned"></select-folder>
+    <search-function v-if="scanned"></search-function>
+    <search-results v-if="scanned" :search-results="searchResults"></search-results>
+    <function-preview v-if="scanned && functionSelected" :function-selected="functionSelected"></function-preview>
   </div>
 </template>
 
@@ -23,7 +23,8 @@ export default {
       showPreview
     },
     getters: {
-      scannedFolder: state => state.scannedFolder,
+      scannedFolder: state => state.path,
+      scanned: state => state.scanned,
       searchResults: state => state.searchPage.results,
       functionSelected: state => state.searchPage.preview
     }
@@ -41,8 +42,8 @@ export default {
     'search-updated': function(search) {
       this.searchFunction(search);
     },
-    'search-result-clicked': function(selectedFunction) {
-      this.showPreview(selectedFunction);
+    'search-result-clicked': function(index) {
+      this.showPreview(index);
     },
   }
 }

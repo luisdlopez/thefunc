@@ -8,7 +8,7 @@
         <tbody>
           <tr class="result" v-for="result in searchResults">
             <td>
-              <div v-on:click.stop.prevent="searchResultClicked(result)">{{ result.original.name }}</div>
+              <div v-on:click.stop.prevent="searchResultClicked(result.index)">{{ result.string }}</div>
             </td>
           </tr>
         </tbody>
@@ -22,9 +22,8 @@
 export default {
   props: ['searchResults'],
   methods: {
-    searchResultClicked: function(result) {
-      let selectedFunction = result.original;
-      this.$dispatch('search-result-clicked', selectedFunction);
+    searchResultClicked: function(index) {
+      this.$dispatch('search-result-clicked', index);
     }
   }
 }
