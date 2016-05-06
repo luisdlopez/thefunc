@@ -13,7 +13,7 @@
     </div>
 
     <div class="results-container">
-      <table class="ui single line table">
+      <table class="ui selectable celled table">
         <tbody>
           <tr v-for="result in searchResults">
             <td class="result">
@@ -77,9 +77,5 @@ export default {
 
 .result {
   cursor: pointer;
-}
-
-.result:hover {
-  background-color: #eee;
 }
 </style>
