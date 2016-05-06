@@ -1,15 +1,24 @@
 <template>
   <div class="select-folder-container">
 
-    <div class="file-upload pure-button button-primary">
+    <div class="ui black basic button file-upload">
       {{ folderName || 'Select Folder' }}
-      <input v-el:dialog id="dialog" type="file" nwdirectory v-on:change="folderSelected" class="upload"/>
+      <input v-el:dialog
+            id="dialog"
+            type="file"
+            nwdirectory
+            v-on:change="folderSelected"
+            class="upload"/>
     </div>
 
-    <button type="button" v-on:click="scan" :disabled="!path || scanStarted"
-          class="scan-folder pure-button button-secondary">
+    <button type="button"
+          v-on:click="scan"
+          :disabled="!path || scanStarted"
+          class="ui black basic button scan-folder">
+
       <span v-if="!scanStarted">Scan</span>
       <span v-if="scanStarted">Scanning...</span>
+
     </button>
 
   </div>
@@ -44,7 +53,7 @@ export default {
 
 <style>
 .select-folder-container {
-  height: 100%;
+  height: calc(100% - 49px);
   display: flex;
   flex-flow: column;
   justify-content: center;
@@ -55,7 +64,7 @@ export default {
 .scan-folder {
   position: relative;
   width: 25%;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem !important;
 }
 
 .file-upload input.upload {
@@ -69,19 +78,4 @@ export default {
     opacity: 0;
     filter: alpha(opacity=0);
 }
-
-/*.button-primary,
-.button-secondary {
-  color: white;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-  background-color: #333;
-}
-
-.button-primary {
-  border-left: 3px solid #06B7FB;
-}
-
-.button-secondary {
-  border-left: 3px solid #24F53E;
-}*/
 </style>

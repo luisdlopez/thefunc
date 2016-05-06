@@ -1,0 +1,40 @@
+<template>
+  <div class="search-page-container">
+
+    <search-function
+          :search="activeProject.searchPage.search"
+          :search-results="activeProject.searchPage.results">
+    </search-function>
+
+    <function-preview
+          v-if="activeProject.scanned && activeProject.searchPage.preview"
+          :function-selected="activeProject.searchPage.preview">
+    </function-preview>
+
+  </div>
+</template>
+
+<script>
+import SearchFunctionComponent from './search-function.vue';
+import FunctionPreviewComponent from './function-preview.vue';
+
+export default {
+  props: ['activeProject'],
+  components: {
+    'search-function': SearchFunctionComponent,
+    'function-preview': FunctionPreviewComponent,
+  },
+  methods: {
+    searchResultClicked: function(index) {
+      this.$dispatch('search-result-clicked', index);
+    }
+  }
+}
+</script>
+
+<style>
+.search-page-container {
+  height: calc(100% - 49px);
+  width: 100%;
+}
+</style>

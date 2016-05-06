@@ -31,7 +31,7 @@ export default {
   display: inline-block;
   vertical-align:top;
   width: 59%;
-  height: calc(100% - 68px);
+  height: 100%;
 }
 
 .editor-container {
@@ -41,10 +41,10 @@ export default {
 }
 
 .editor {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 </style>

@@ -1,39 +1,32 @@
 <template>
   <div id="app">
-    <select-folder v-show="!scanned"></select-folder>
-    <search-function v-if="scanned"></search-function>
-    <search-results v-if="scanned" :search-results="searchResults"></search-results>
-    <function-preview v-if="scanned && functionSelected" :function-selected="functionSelected"></function-preview>
+
+    <project-tabs :projects="projectNames" :active-index="activeIndex"></project-tabs>
+    <select-folder v-if="!activeProject.path"></select-folder>
+    <search-page v-if="activeProject.scanned" :active-project="activeProject"></search-page>
+
   </div>
 </template>
 
 <script>
-import SelectFolderComponent from './select-folder.vue';
-import SearchFunctionComponent from './search-function.vue';
-import SearchResultsComponent from './search-results.vue';
-import FunctionPreviewComponent from './function-preview.vue';
-
-import { scanFolder, searchFunction, showPreview } from '../vuex/actions';
+import ProjectTabsComponent from './project-tabs.vue';
+import SelectFolderComponent from './folder-select/select-folder.vue';
+import searchPageComponent from './search-page/index.vue';
+import * as actions from '../vuex/actions';
 
 export default {
   vuex: {
-    actions: {
-      scanFolder,
-      searchFunction,
-      showPreview
-    },
+    actions,
     getters: {
-      scannedFolder: state => state.path,
-      scanned: state => state.scanned,
-      searchResults: state => state.searchPage.results,
-      functionSelected: state => state.searchPage.preview
+      activeIndex: state => state.activeProject,
+      activeProject: state => state.projects[state.activeProject],
+      projectNames: state => state.projects.map(project => project.path)
     }
   },
   components: {
+    'project-tabs': ProjectTabsComponent,
     'select-folder': SelectFolderComponent,
-    'search-function': SearchFunctionComponent,
-    'search-results': SearchResultsComponent,
-    'function-preview': FunctionPreviewComponent
+    'search-page': searchPageComponent
   },
   events: {
     'folder-selected': function (path) {
@@ -45,6 +38,12 @@ export default {
     'search-result-clicked': function(index) {
       this.showPreview(index);
     },
+    'project-tab-clicked': function(index) {
+      this.changeActiveProject(index);
+    },
+    'add-new-project': function() {
+      this.openNewProject();
+    }
   }
 }
 
