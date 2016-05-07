@@ -57,8 +57,8 @@ export default {
     'view-tab-clicked': function(index) {
       console.log('view-tab-clicked clicked!', index);
     },
-    'start-function-navigation': function(functionString) {
-      this.startFunctionNavigation(functionString);
+    'start-function-navigation': function(functionName, parsedFunctionIndex) {
+      this.startFunctionNavigation(functionName, parsedFunctionIndex);
     }
   }
 }

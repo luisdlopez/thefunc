@@ -2,27 +2,35 @@ import fuzzy from 'fuzzy';
 var beautify = require('js-beautify').js_beautify;
 import _ from 'lodash';
 
+let jsBeautifyOptions = {
+  indent_size: 2,
+  preserve_newlines: true,
+  break_chained_methods: true,
+  end_with_newline: true
+}
+
+let newProjectTemplate = {
+  path: '',
+  scanned: false,
+  lastScan: null,
+  activeView: 0,
+  views: [{
+    title: 'Search',
+    search: '',
+    results: [],
+    preview: ''
+  }],
+  scan: {
+    parsedFunctions: [],
+    functionNames: [],
+    error: [],
+    stats: {}
+  }
+};
+
 export const state = {
   activeProject: 0,
-  projects: [{
-    path: '',
-    scanned: false,
-    lastScan: null,
-    activeView: 0,
-    views: [{
-      title: 'Search',
-      search: '',
-      results: [],
-      preview: ''
-    }],
-    scan: {
-      parsedFunctions: [],
-      functionNames: [],
-      error: [],
-      stats: {}
-    },
-    functionNvigation: []
-  }]
+  projects: [_.assign({}, newProjectTemplate)]
 };
 
 export const mutations = {
@@ -52,13 +60,7 @@ export const mutations = {
     activeProject.views[0].results = activeProject.views[0].results.map((result, index) => {
       return _.assign({}, result, { clicked: index === resultIndex })
     });
-    let options = {
-      indent_size: 2,
-      preserve_newlines: true,
-      break_chained_methods: true,
-      end_with_newline: true
-    }
-    let content = beautify(activeProject.scan.parsedFunctions[parsedFunctionIndex].content, options)
+    let content = beautify(activeProject.scan.parsedFunctions[parsedFunctionIndex].content, jsBeautifyOptions)
     activeProject.views[0].preview = '\n' + content;
   },
 
@@ -67,24 +69,7 @@ export const mutations = {
   },
 
   OPEN_NEW_PROJECT (state, index) {
-    state.projects.push({
-      path: '',
-      scanned: false,
-      lastScan: null,
-      activeView: 0,
-      views: [{
-        title: 'Search',
-        search: '',
-        results: [],
-        preview: ''
-      }],
-      scan: {
-        parsedFunctions: [],
-        functionNames: [],
-        error: [],
-        stats: {}
-      }
-    });
+    state.projects.push(_.assign({}, newProjectTemplate));
     state.activeProject = state.projects.length - 1;
   },
 
@@ -92,8 +77,16 @@ export const mutations = {
     state.projects.$remove(index);
   },
 
-  START_FUNCTION_NAVIGATION (state, functionString) {
-    console.log('functionString: ' + functionString);
+  START_FUNCTION_NAVIGATION (state, functionName, parsedFunctionIndex) {
+    let activeProject = state.projects[state.activeProject];
+    // let content = beautify(activeProject.scan.parsedFunctions[parsedFunctionIndex].content, jsBeautifyOptions)
+    let content = activeProject.scan.parsedFunctions[parsedFunctionIndex].content;
+    activeProject.views.push({
+      title: functionName,
+      functions: [
+        content
+      ]
+    });
   }
 
 };

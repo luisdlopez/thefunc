@@ -20,7 +20,7 @@
               <div v-on:click.stop.prevent="searchResultClicked(index, result.index)">
                 {{ result.string }}
                 <i v-bind:class="{ 'arrow circle outline right icon result-icon': result.clicked }"
-                      v-on:click.stop.prevent="startFunctionNavigation(result.string)"></i>
+                      v-on:click.stop.prevent="startFunctionNavigation(result.string, result.index)"></i>
               </div>
             </td>
           </tr>
@@ -43,8 +43,8 @@ export default {
     searchResultClicked: function(resultIndex, parsedFunctionIndex) {
       this.$dispatch('search-result-clicked', resultIndex, parsedFunctionIndex);
     },
-    startFunctionNavigation: function(functionString) {
-      this.$dispatch('start-function-navigation', functionString);
+    startFunctionNavigation: function(functionString, parsedFunctionIndex) {
+      this.$dispatch('start-function-navigation', functionString, parsedFunctionIndex);
     }
   }
 }
