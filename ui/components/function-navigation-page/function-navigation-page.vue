@@ -1,16 +1,16 @@
 <template>
-  <div class="preview-container">
+  <div class="function-navigation-page-container">
 
-    <div class="preview-editor-container">
-      <div class="preview-editor" v-ace="functionSelected"></div>
+    <div class="view-editor-container" v-for="func in functions">
+      <div class="vide-editor" v-ace="func"></div>
     </div>
 
-  <div>
+  </div>
 </template>
 
 <script>
 export default {
-  props: ['functionSelected'],
+  props: ['functions'],
   directives: {
     ace: {
       bind: function() {
@@ -32,19 +32,17 @@ export default {
 </script>
 
 <style>
-.preview-container {
-  display: inline-block;
-  vertical-align:top;
-  width: 59%;
-  height: 100%;
-}
-
-.preview-editor-container {
-  position: relative;
+.function-navigation-page-container {
+  height: calc(100% - 49px);
   width: 100%;
 }
 
-.preview-editor {
+.view-editor-container {
+  position: relative;
+  width: 625px;
+}
+
+.view-editor {
   position: absolute;
   top: 0;
   right: 0;

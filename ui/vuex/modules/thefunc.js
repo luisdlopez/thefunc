@@ -61,7 +61,7 @@ export const mutations = {
       return _.assign({}, result, { clicked: index === resultIndex })
     });
     let content = beautify(activeProject.scan.parsedFunctions[parsedFunctionIndex].content, jsBeautifyOptions)
-    activeProject.views[0].preview = '\n' + content;
+    activeProject.views[0].preview = `\n${content}`;
   },
 
   CHANGE_ACTIVE_PROJECT (state, index) {
@@ -74,19 +74,32 @@ export const mutations = {
   },
 
   CLOSE_PROJECT (state, index) {
-    state.projects.$remove(index);
+    state.projects.splice(index, 1);
+    state.activeProject = index - 1;
+  },
+
+  CHANGE_ACTIVE_VIEW (state, index) {
+    let activeProject = state.projects[state.activeProject];
+    activeProject.activeView = index;
+  },
+
+  CLOSE_VIEW_TAB (state, index) {
+    let activeProject = state.projects[state.activeProject];
+    activeProject.views.splice(index, 1);
+    activeProject.activeView = index - 1;
   },
 
   START_FUNCTION_NAVIGATION (state, functionName, parsedFunctionIndex) {
     let activeProject = state.projects[state.activeProject];
     // let content = beautify(activeProject.scan.parsedFunctions[parsedFunctionIndex].content, jsBeautifyOptions)
-    let content = activeProject.scan.parsedFunctions[parsedFunctionIndex].content;
+    let content = beautify(activeProject.scan.parsedFunctions[parsedFunctionIndex].content, jsBeautifyOptions);
     activeProject.views.push({
       title: functionName,
       functions: [
-        content
+        `\n${content}`
       ]
     });
+    activeProject.activeView = activeProject.views.length - 1
   }
 
 };

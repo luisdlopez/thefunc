@@ -10,6 +10,7 @@
       <view-tabs :views="views" :active-view="activeView"></view-tabs>
 
       <search-page v-if="activeView === 0" :active-project="activeProject"></search-page>
+      <function-navigation-page v-if="activeView > 0" :functions="activeViewFunctions"></function-navigation-page>
 
     </div>
 
@@ -20,7 +21,8 @@
 import ProjectTabsComponent from './project-tabs.vue';
 import ViewTabsComponent from './view-tabs.vue';
 import SelectFolderComponent from './folder-select/select-folder.vue';
-import searchPageComponent from './function-search-page/function-search-page.vue';
+import SearchComponent from './function-search-page/function-search-page.vue';
+import FunctionNavigationComponent from './function-navigation-page/function-navigation-page.vue';
 import * as actions from '../vuex/actions';
 
 export default {
@@ -31,14 +33,19 @@ export default {
       activeProject: state => state.projects[state.activeProject],
       projectNames: state => state.projects.map(project => project.path),
       views: state => state.projects[state.activeProject].views,
-      activeView: state => state.projects[state.activeProject].activeView
+      activeView: state => state.projects[state.activeProject].activeView,
+      activeViewFunctions: state => {
+        let activeProject = state.projects[state.activeProject];
+        return activeProject.views[activeProject.activeView].functions;
+      }
     }
   },
   components: {
     'project-tabs': ProjectTabsComponent,
     'view-tabs': ViewTabsComponent,
     'select-folder': SelectFolderComponent,
-    'search-page': searchPageComponent
+    'search-page': SearchComponent,
+    'function-navigation-page': FunctionNavigationComponent
   },
   events: {
     'folder-selected': function (path) {
@@ -56,8 +63,14 @@ export default {
     'add-new-project': function() {
       this.openNewProject();
     },
+    'close-project-tab': function(index) {
+      this.closeProject(index);
+    },
     'view-tab-clicked': function(index) {
-      console.log('view-tab-clicked clicked!', index);
+      this.changeActiveView(index);
+    },
+    'close-view-tab': function(index) {
+      this.closeViewTab(index);
     },
     'start-function-navigation': function(functionName, parsedFunctionIndex) {
       this.startFunctionNavigation(functionName, parsedFunctionIndex);
