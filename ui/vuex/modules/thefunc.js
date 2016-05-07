@@ -9,17 +9,19 @@ export const state = {
     scanned: false,
     lastScan: null,
     activeView: 0,
-    searchPage: {
+    views: [{
+      title: 'Search',
       search: '',
       results: [],
       preview: ''
-    },
+    }],
     scan: {
       parsedFunctions: [],
       functionNames: [],
       error: [],
       stats: {}
-    }
+    },
+    functionNvigation: []
   }]
 };
 
@@ -41,22 +43,23 @@ export const mutations = {
   SEARCH_FUNCTION (state, search) {
     let activeProject = state.projects[state.activeProject];
     // apply fuzzy search on name property
-    activeProject.searchPage.search = search;
-    activeProject.searchPage.results = fuzzy.filter(search, activeProject.scan.functionNames);
+    activeProject.views[0].search = search;
+    activeProject.views[0].results = fuzzy.filter(search, activeProject.scan.functionNames);
   },
 
   SHOW_PREVIEW (state, resultIndex, parsedFunctionIndex) {
     let activeProject = state.projects[state.activeProject];
-    activeProject.searchPage.results = activeProject.searchPage.results.map((result, index) => {
+    activeProject.views[0].results = activeProject.views[0].results.map((result, index) => {
       return _.assign({}, result, { clicked: index === resultIndex })
     });
     let options = {
       indent_size: 2,
-      preserve_newlines: true, 
-      break_chained_methods: true
+      preserve_newlines: true,
+      break_chained_methods: true,
+      end_with_newline: true
     }
     let content = beautify(activeProject.scan.parsedFunctions[parsedFunctionIndex].content, options)
-    activeProject.searchPage.preview = content;
+    activeProject.views[0].preview = '\n' + content;
   },
 
   CHANGE_ACTIVE_PROJECT (state, index) {
@@ -68,12 +71,13 @@ export const mutations = {
       path: '',
       scanned: false,
       lastScan: null,
-      searchPage: {
-        active: false,
+      activeView: 0,
+      views: [{
+        title: 'Search',
         search: '',
         results: [],
         preview: ''
-      },
+      }],
       scan: {
         parsedFunctions: [],
         functionNames: [],
@@ -86,6 +90,10 @@ export const mutations = {
 
   CLOSE_PROJECT (state, index) {
     state.projects.$remove(index);
+  },
+
+  START_FUNCTION_NAVIGATION (state, functionString) {
+    console.log('functionString: ' + functionString);
   }
 
 };

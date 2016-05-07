@@ -15,11 +15,16 @@ export default {
     ace: {
       bind: function() {
         this.editor = ace.edit(this.el);
+        this.editor.setOptions({
+          maxLines: 100,
+          readOnly: false,
+          showGutter: true
+        });
         this.editor.setTheme("ace/theme/monokai");
         this.editor.session.setMode("ace/mode/javascript");
       },
       update: function(value) {
-        this.editor.setValue(value);
+        this.editor.setValue(value, -1);
       }
     }
   }
@@ -36,7 +41,6 @@ export default {
 
 .editor-container {
   position: relative;
-  height: 100%;
   width: 100%;
 }
 

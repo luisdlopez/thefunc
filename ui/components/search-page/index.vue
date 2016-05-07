@@ -2,13 +2,13 @@
   <div class="search-page-container">
 
     <search-function
-          :search="activeProject.searchPage.search"
-          :search-results="activeProject.searchPage.results">
+          :search="activeProject.views[0].search"
+          :search-results="activeProject.views[0].results">
     </search-function>
 
     <function-preview
-          v-if="activeProject.scanned && activeProject.searchPage.preview"
-          :function-selected="activeProject.searchPage.preview">
+          v-if="activeProject.scanned && activeProject.views[0].preview"
+          :function-selected="activeProject.views[0].preview">
     </function-preview>
 
   </div>

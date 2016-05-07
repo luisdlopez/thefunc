@@ -15,9 +15,13 @@
     <div class="results-container">
       <table class="ui selectable celled table">
         <tbody>
-          <tr v-for="(index, result) in searchResults" v-on:click.stop.prevent="searchResultClicked(index, result.index)">
+          <tr v-for="(index, result) in searchResults">
             <td class="result" v-bind:class="{ 'positive': result.clicked }">
-              <div>{{ result.string }}</div>
+              <div v-on:click.stop.prevent="searchResultClicked(index, result.index)">
+                {{ result.string }}
+                <i v-bind:class="{ 'arrow circle outline right icon result-icon': result.clicked }"
+                      v-on:click.stop.prevent="startFunctionNavigation(result.string)"></i>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -38,6 +42,9 @@ export default {
   methods: {
     searchResultClicked: function(resultIndex, parsedFunctionIndex) {
       this.$dispatch('search-result-clicked', resultIndex, parsedFunctionIndex);
+    },
+    startFunctionNavigation: function(functionString) {
+      this.$dispatch('start-function-navigation', functionString);
     }
   }
 }
@@ -77,5 +84,9 @@ export default {
 
 .result {
   cursor: pointer;
+}
+
+.result-icon {
+  float: right;
 }
 </style>

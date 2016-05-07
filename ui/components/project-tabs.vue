@@ -1,5 +1,5 @@
 <template>
-  <div class="ui top attached tabular menu">
+  <div class="ui pointing secondary menu">
 
     <a class="item"
           v-for="path in projects"
