@@ -2,11 +2,13 @@
   <div id="app">
 
     <project-tabs :projects="projectNames" :active-index="activeIndex"></project-tabs>
+
     <select-folder v-if="!activeProject.path"></select-folder>
 
     <div v-if="activeProject.scanned">
 
       <view-tabs :views="views" :active-view="activeView"></view-tabs>
+
       <search-page v-if="activeView === 0" :active-project="activeProject"></search-page>
 
     </div>
@@ -18,7 +20,7 @@
 import ProjectTabsComponent from './project-tabs.vue';
 import ViewTabsComponent from './view-tabs.vue';
 import SelectFolderComponent from './folder-select/select-folder.vue';
-import searchPageComponent from './search-page/index.vue';
+import searchPageComponent from './function-search-page/function-search-page.vue';
 import * as actions from '../vuex/actions';
 
 export default {

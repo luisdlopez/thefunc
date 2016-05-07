@@ -1,5 +1,5 @@
 <template>
-  <div class="function-preview-container">
+  <div class="preview-container">
 
     <div class="editor-container">
       <div class="editor" v-ace="functionSelected"></div>
@@ -32,7 +32,7 @@ export default {
 </script>
 
 <style>
-.function-preview-container {
+.preview-container {
   display: inline-block;
   vertical-align:top;
   width: 59%;

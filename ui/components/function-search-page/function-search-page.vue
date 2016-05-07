@@ -1,28 +1,28 @@
 <template>
   <div class="search-page-container">
 
-    <search-function
+    <search 
           :search="activeProject.views[0].search"
           :search-results="activeProject.views[0].results">
-    </search-function>
+    </search>
 
-    <function-preview
+    <preview
           v-if="activeProject.scanned && activeProject.views[0].preview"
           :function-selected="activeProject.views[0].preview">
-    </function-preview>
+    </preview>
 
   </div>
 </template>
 
 <script>
-import SearchFunctionComponent from './search-function.vue';
-import FunctionPreviewComponent from './function-preview.vue';
+import SearchComponent from './search.vue';
+import PreviewComponent from './preview.vue';
 
 export default {
   props: ['activeProject'],
   components: {
-    'search-function': SearchFunctionComponent,
-    'function-preview': FunctionPreviewComponent,
+    'search': SearchComponent,
+    'preview': PreviewComponent,
   },
   methods: {
     searchResultClicked: function(index) {
