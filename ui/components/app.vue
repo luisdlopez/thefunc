@@ -35,8 +35,8 @@ export default {
     'search-updated': function(search) {
       this.searchFunction(search);
     },
-    'search-result-clicked': function(index) {
-      this.showPreview(index);
+    'search-result-clicked': function(resultIndex, parsedFunctionIndex) {
+      this.showPreview(resultIndex, parsedFunctionIndex);
     },
     'project-tab-clicked': function(index) {
       this.changeActiveProject(index);

@@ -20,6 +20,7 @@
     "codemirror": "^5.14.2",
     "esprima": "^2.7.2",
     "fuzzy": "^0.1.1",
+    "js-beautify": "^1.6.2",
     "lodash": "^4.11.1",
     "node-dir": "^0.1.11",
     "vue": "^1.0.21",

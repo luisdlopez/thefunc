@@ -15,9 +15,9 @@
     <div class="results-container">
       <table class="ui selectable celled table">
         <tbody>
-          <tr v-for="result in searchResults">
-            <td class="result">
-              <div v-on:click.stop.prevent="searchResultClicked(result.index)">{{ result.string }}</div>
+          <tr v-for="(index, result) in searchResults" v-on:click.stop.prevent="searchResultClicked(index, result.index)">
+            <td class="result" v-bind:class="{ 'positive': result.clicked }">
+              <div>{{ result.string }}</div>
             </td>
           </tr>
         </tbody>
@@ -36,8 +36,8 @@ export default {
     }
   },
   methods: {
-    searchResultClicked: function(index) {
-      this.$dispatch('search-result-clicked', index);
+    searchResultClicked: function(resultIndex, parsedFunctionIndex) {
+      this.$dispatch('search-result-clicked', resultIndex, parsedFunctionIndex);
     }
   }
 }
