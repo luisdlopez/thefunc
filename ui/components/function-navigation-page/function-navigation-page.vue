@@ -9,12 +9,21 @@
 </template>
 
 <script>
+import $ from 'jquery';
+
 export default {
   props: ['functions'],
+  methods: {
+    openFunction: function() {
+      console.log('openFunction called !!!');
+    }
+  },
   directives: {
     ace: {
+
       bind: function() {
-        this.editor = ace.edit(this.el);
+        let el = this.el;
+        this.editor = ace.edit(el);
         this.editor.setOptions({
           maxLines: 100,
           readOnly: false,
@@ -22,10 +31,37 @@ export default {
         });
         this.editor.setTheme("ace/theme/monokai");
         this.editor.session.setMode("ace/mode/javascript");
+
+        this.el.addEventListener('keydown', event => {
+          let COMMAND_KEY_CODE = 91;
+          let CTRL_KEY_CODE = 17;
+
+          if (event.which === COMMAND_KEY_CODE || event.which === CTRL_KEY_CODE) {
+            $(el)
+              .find('.ace_identifier')
+              .toArray()
+              .forEach(candidate => {
+                candidate = $(candidate);
+                // TODO: add css class and click event handler is
+                // text is found in our parsed functions
+                candidate.addClass('highlight-function-call');
+                candidate.on('click', event => {
+                  this.vm.openFunction();
+                });
+              });
+          }
+        });
+
+        el.addEventListener('keyup', function(event) {
+          $(el).find('.ace_identifier').removeClass('highlight-function-call');
+        });
+        
       },
+
       update: function(value) {
         this.editor.setValue(value, -1);
       }
+
     }
   }
 }
@@ -48,5 +84,12 @@ export default {
   right: 0;
   bottom: 0;
   left: 0;
+}
+
+.highlight-function-call {
+  pointer-events: auto;
+  cursor: pointer;
+  color: orange;
+  text-decoration: underline;
 }
 </style>
