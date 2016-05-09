@@ -5,7 +5,7 @@
 
     <select-folder v-if="!activeProject.path"></select-folder>
 
-    <div v-if="activeProject.scanned">
+    <div class="project-container" v-if="activeProject.scanned">
 
       <view-tabs :views="views" :active-view="activeView"></view-tabs>
 
@@ -84,5 +84,9 @@ export default {
 #app {
   height:100%;
   margin:0;
+}
+
+.project-container {
+  height: calc(100% - 59px);
 }
 </style>

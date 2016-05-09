@@ -1,7 +1,7 @@
 <template>
   <div class="search-page-container">
 
-    <search 
+    <search
           :search="activeProject.views[0].search"
           :search-results="activeProject.views[0].results">
     </search>

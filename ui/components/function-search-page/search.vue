@@ -62,7 +62,6 @@ export default {
 .search-field-container {
   margin: 10px auto;
   width: 80%;
-
 }
 
 .search-field {
