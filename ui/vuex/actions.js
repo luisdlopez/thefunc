@@ -7,6 +7,7 @@ export const closeProject = makeAction('CLOSE_PROJECT');
 export const changeActiveView = makeAction('CHANGE_ACTIVE_VIEW');
 export const closeViewTab = makeAction('CLOSE_VIEW_TAB');
 export const startFunctionNavigation = makeAction('START_FUNCTION_NAVIGATION');
+export const openFunction = makeAction('OPEN_FUNCTION');
 
 function makeAction (type) {
   return ({ dispatch }, ...args) => dispatch(type, ...args)

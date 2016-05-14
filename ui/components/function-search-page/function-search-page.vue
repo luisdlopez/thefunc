@@ -14,7 +14,7 @@
   </div>
 </template>
 
-<script>
+<script type="text/babel">
 import SearchComponent from './search.vue';
 import PreviewComponent from './preview.vue';
 

@@ -8,7 +8,7 @@
   <div>
 </template>
 
-<script>
+<script type="text/babel">
 export default {
   props: ['functionSelected'],
   directives: {
@@ -20,7 +20,7 @@ export default {
           readOnly: false,
           showGutter: true
         });
-        this.editor.setTheme("ace/theme/monokai");
+//        this.editor.setTheme("ace/theme/monokai");
         this.editor.session.setMode("ace/mode/javascript");
       },
       update: function(value) {

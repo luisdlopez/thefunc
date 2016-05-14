@@ -31,7 +31,7 @@
   </div>
 </template>
 
-<script>
+<script type="text/babel">
 export default {
   props: ['search', 'searchResults'],
   watch: {

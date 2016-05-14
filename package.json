@@ -6,6 +6,7 @@
   "node-main": "services/index.js",
   "private": true,
   "scripts": {
+    "watch": "webpack-dev-server --inline --hot",
     "dev": "webpack-dev-server --inline --hot | npm start",
     "build": "webpack",
     "start": "/Applications/nwjs.app/Contents/MacOS/nwjs ."

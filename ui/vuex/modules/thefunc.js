@@ -7,7 +7,7 @@ let jsBeautifyOptions = {
   preserve_newlines: true,
   break_chained_methods: true,
   end_with_newline: true
-}
+};
 
 let newProjectTemplate = {
   path: '',
@@ -60,8 +60,8 @@ export const mutations = {
     activeProject.views[0].results = activeProject.views[0].results.map((result, index) => {
       return _.assign({}, result, { clicked: index === resultIndex })
     });
-    let content = beautify(activeProject.scan.parsedFunctions[parsedFunctionIndex].content, jsBeautifyOptions)
-    activeProject.views[0].preview = `\n${content}`;
+    let formattedContent = beautify(activeProject.scan.parsedFunctions[parsedFunctionIndex].content, jsBeautifyOptions);
+    activeProject.views[0].preview = `\n${formattedContent}`;
   },
 
   CHANGE_ACTIVE_PROJECT (state, index) {
@@ -91,15 +91,26 @@ export const mutations = {
 
   START_FUNCTION_NAVIGATION (state, functionName, parsedFunctionIndex) {
     let activeProject = state.projects[state.activeProject];
-    // let content = beautify(activeProject.scan.parsedFunctions[parsedFunctionIndex].content, jsBeautifyOptions)
-    let content = beautify(activeProject.scan.parsedFunctions[parsedFunctionIndex].content, jsBeautifyOptions);
+    let func = activeProject.scan.parsedFunctions[parsedFunctionIndex];
+    let formattedContent = beautify(func.content, jsBeautifyOptions);
+
     activeProject.views.push({
       title: functionName,
       functions: [
-        `\n${content}`
+        // [`\n${content}`]
+        [_.assign({}, func, { content: `\n${formattedContent}` })]
       ]
     });
     activeProject.activeView = activeProject.views.length - 1
+  },
+
+  OPEN_FUNCTION (state) {
+    let activeProject = state.projects[state.activeProject];
+    let activeView = activeProject.views[activeProject.activeView];
+
+    let test = activeView.functions[activeView.functions.length - 1].concat(activeView.functions[activeView.functions.length - 1]);
+
+    activeView.functions.push(test);
   }
 
 };

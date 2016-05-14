@@ -4,8 +4,10 @@ exports.get = function getFunctionExpressions(content, parsedContent) {
   let functionObjects = findFunctionExpressions(parsedContent);
   return functionObjects.map(functionObject => {
     let name = `${functionObject.id.name}`;
+    let lines = functionObject.loc.end.line - functionObject.loc.start.line;
     let func = content.substring(functionObject.range[0], functionObject.range[1]);
     return {
+      lines,
       name: name,
       content: func
     };

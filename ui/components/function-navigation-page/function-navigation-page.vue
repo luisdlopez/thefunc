@@ -1,21 +1,33 @@
 <template>
   <div class="function-navigation-page-container">
 
-    <div class="view-editor-container" v-for="func in functions">
-      <div class="vide-editor" v-ace="func"></div>
+    <div class="view-container">
+
+      <div class="column" v-for="column in functions" track-by="$index">
+
+        <div class="view-editor-container"
+              v-for="func in column" track-by="$index"
+             v-bind:style="{ height: (func.lines * 16 + 48) + 'px', marginBottom: '32px' }">
+
+          <div class="view-editor" v-ace="func.content"></div>
+
+        </div>
+
+      </div>
+      
     </div>
 
   </div>
 </template>
 
-<script>
+<script type="text/babel">
 import $ from 'jquery';
 
 export default {
   props: ['functions'],
   methods: {
     openFunction: function() {
-      console.log('openFunction called !!!');
+      this.$dispatch('open-function');
     }
   },
   directives: {
@@ -29,7 +41,7 @@ export default {
           readOnly: false,
           showGutter: true
         });
-        this.editor.setTheme("ace/theme/monokai");
+//        this.editor.setTheme("ace/theme/monokai");
         this.editor.session.setMode("ace/mode/javascript");
 
         this.el.addEventListener('keydown', event => {
@@ -55,7 +67,7 @@ export default {
         el.addEventListener('keyup', function(event) {
           $(el).find('.ace_identifier').removeClass('highlight-function-call');
         });
-        
+
       },
 
       update: function(value) {
@@ -69,13 +81,31 @@ export default {
 
 <style>
 .function-navigation-page-container {
+  border: 1px solid black;
   height: calc(100% - 49px);
   width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.view-container {
+  border: 1px solid red;
+  white-space: nowrap;
+  height: 100%;
+}
+
+.column {
+  overflow-y: auto;
+  height: inherit;
+  min-width: 560px;
+  display: inline-block;
+  vertical-align: top;
+  padding: 5px;
 }
 
 .view-editor-container {
+  display: block;
   position: relative;
-  width: 625px;
 }
 
 .view-editor {

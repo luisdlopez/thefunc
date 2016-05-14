@@ -17,7 +17,7 @@
   </div>
 </template>
 
-<script>
+<script type="text/babel">
 import ProjectTabsComponent from './project-tabs.vue';
 import ViewTabsComponent from './view-tabs.vue';
 import SelectFolderComponent from './folder-select/select-folder.vue';
@@ -48,7 +48,7 @@ export default {
     'function-navigation-page': FunctionNavigationComponent
   },
   events: {
-    'folder-selected': function (path) {
+    'folder-selected': function(path) {
       this.scanFolder(path);
     },
     'search-updated': function(search) {
@@ -74,6 +74,9 @@ export default {
     },
     'start-function-navigation': function(functionName, parsedFunctionIndex) {
       this.startFunctionNavigation(functionName, parsedFunctionIndex);
+    },
+    'open-function': function() {
+      this.openFunction();
     }
   }
 }

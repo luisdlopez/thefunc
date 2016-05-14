@@ -6,7 +6,7 @@ let functionExpressions = require('./function.expressions');
 let assignmentExpressions = require('./assignment.expressions');
 
 exports.getFunctions = function getFunctions(content) {
-  let options = { range: true };
+  let options = { range: true, loc: true };
 
   // tell esprima to parse file as ES6 module
   if (content.indexOf('import') !== -1 || content.indexOf('export ') !== -1) {
