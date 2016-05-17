@@ -30,7 +30,7 @@ let newProjectTemplate = {
 
 export const state = {
   activeProject: 0,
-  projects: [_.assign({}, newProjectTemplate)]
+  projects: [_.cloneDeepWith(newProjectTemplate)]
 };
 
 export const mutations = {
@@ -68,8 +68,8 @@ export const mutations = {
     state.activeProject = index;
   },
 
-  OPEN_NEW_PROJECT (state, index) {
-    state.projects.push(_.assign({}, newProjectTemplate));
+  OPEN_NEW_PROJECT (state) {
+    state.projects.push(_.cloneDeepWith(newProjectTemplate));
     state.activeProject = state.projects.length - 1;
   },
 

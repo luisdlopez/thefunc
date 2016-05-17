@@ -86,7 +86,10 @@ export default {
         });
 
         el.addEventListener('keyup', function(event) {
-          $(el).find('.ace_identifier,.ace_function').not('.ace_name').removeClass('highlight-function-call');
+          $(el).find('.ace_identifier,.ace_function')
+                  .not('.ace_name')
+                  .removeClass('highlight-function-call')
+                  .unbind('click');
         });
 
       },
@@ -103,7 +106,6 @@ export default {
 
 <style>
 .function-navigation-page-container {
-  border: 1px solid black;
   height: calc(100% - 49px);
   width: 100%;
   overflow-x: auto;
@@ -111,7 +113,6 @@ export default {
 }
 
 .view-container {
-  border: 1px solid red;
   white-space: nowrap;
   height: 100%;
 }
