@@ -48,7 +48,7 @@ module.exports = {
     historyApiFallback: true
   },
   devtool: '#eval-source-map'
-}
+};
 
 if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map'
@@ -60,9 +60,9 @@ if (process.env.NODE_ENV === 'production') {
       }
     }),
     new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
+      mangle: true,
+      compress: { warnings: false },
+      output: { comments: false }
     }),
     new webpack.optimize.OccurenceOrderPlugin()
   ])

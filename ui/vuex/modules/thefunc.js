@@ -104,13 +104,21 @@ export const mutations = {
     activeProject.activeView = activeProject.views.length - 1
   },
 
-  OPEN_FUNCTION (state) {
+  OPEN_FUNCTION (state, options) {
     let activeProject = state.projects[state.activeProject];
     let activeView = activeProject.views[activeProject.activeView];
+    let parsedFunctions = activeProject.scan.parsedFunctions;
 
-    let test = activeView.functions[activeView.functions.length - 1].concat(activeView.functions[activeView.functions.length - 1]);
+    let func = parsedFunctions.find(func => func.name.includes(options.functionName));
+    let formattedContent = beautify(func.content, jsBeautifyOptions);
+    let columnIndex = options.position[0] + 1;
 
-    activeView.functions.push(test);
+    if (!activeView.functions[columnIndex]) {
+      activeView.functions.push([_.assign({}, func, { content: `\n${formattedContent}` })]);
+    }
+    else {
+      activeView.functions[columnIndex].push(_.assign({}, func, { content: `\n${formattedContent}` }));
+    }
   }
 
 };

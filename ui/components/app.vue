@@ -75,8 +75,8 @@ export default {
     'start-function-navigation': function(functionName, parsedFunctionIndex) {
       this.startFunctionNavigation(functionName, parsedFunctionIndex);
     },
-    'open-function': function() {
-      this.openFunction();
+    'open-function': function(options) {
+      this.openFunction(options);
     }
   }
 }

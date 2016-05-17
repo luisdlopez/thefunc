@@ -3,13 +3,13 @@
 
     <div class="view-container">
 
-      <div class="column" v-for="column in functions" track-by="$index">
+      <div class="column" v-for="(columnIndex, column) in functions" track-by="$index">
 
         <div class="view-editor-container"
-              v-for="func in column" track-by="$index"
-             v-bind:style="{ height: (func.lines * 16 + 48) + 'px', marginBottom: '32px' }">
+              v-for="(funcIndex, func) in column" track-by="$index"
+             v-bind:style="{ height: (func.content.split('\n').length * 16 + 32) + 'px' }">
 
-          <div class="view-editor" v-ace="func.content"></div>
+          <div class="view-editor" v-ace="{ content: func.content, position: [columnIndex, funcIndex] }"></div>
 
         </div>
 
@@ -31,16 +31,18 @@ export default {
     }
   },
   methods: {
-    openFunction: function() {
-      this.$dispatch('open-function');
+    openFunction: function(options) {
+      this.$dispatch('open-function', options);
     }
   },
   directives: {
+
     ace: {
 
       bind: function() {
         let el = this.el;
         this.editor = ace.edit(el);
+        this.editorPosition = null;
         this.editor.setOptions({
           maxLines: 100,
           readOnly: false,
@@ -62,8 +64,6 @@ export default {
                 candidate = $(candidate);
                 let innerText = candidate[0].innerText;
 
-                // TODO: add css class and click event handler is
-                // text is found in our parsed functions
                 let activeProject = this.vm.activeProject;
                 let parsedFunctions = activeProject.scan.functionNames;
 
@@ -75,7 +75,7 @@ export default {
                     // if only one found, simply open the new function
                     // if more than one, open some sort of menu to let
                     // user chose the function
-                    this.vm.openFunction();
+                    this.vm.openFunction({ functionName: innerText, position: this.editorPosition});
                   });
 
                 }
@@ -91,8 +91,9 @@ export default {
 
       },
 
-      update: function(value) {
-        this.editor.setValue(value, -1);
+      update: function(options) {
+        this.editor.setValue(options.content, -1);
+        this.editorPosition = options.position;
       }
 
     }
