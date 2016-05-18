@@ -32,60 +32,60 @@
 </template>
 
 <script type="text/babel">
-export default {
-  props: ['search', 'searchResults'],
-  watch: {
-    search: function (value) {
-      this.$dispatch('search-updated', this.search);
-    }
-  },
-  methods: {
-    searchResultClicked: function(resultIndex, parsedFunctionIndex) {
-      this.$dispatch('search-result-clicked', resultIndex, parsedFunctionIndex);
+  export default {
+    props: ['search', 'searchResults'],
+    watch: {
+      search: function () {
+        this.$dispatch('search-updated', this.search);
+      }
     },
-    startFunctionNavigation: function(functionString, parsedFunctionIndex) {
-      this.$dispatch('start-function-navigation', functionString, parsedFunctionIndex);
+    methods: {
+      searchResultClicked: function(resultIndex, parsedFunctionIndex) {
+        this.$dispatch('search-result-clicked', resultIndex, parsedFunctionIndex);
+      },
+      startFunctionNavigation: function(functionString, parsedFunctionIndex) {
+        this.$dispatch('start-function-navigation', functionString, parsedFunctionIndex);
+      }
     }
-  }
-}
+  };
 </script>
 
 <style>
-.search-container {
-  padding-left: 5px;
-  display: inline-block;
-  vertical-align:top;
-  width: 40%;
-  height: 100%;
-}
+  .search-container {
+    padding-left: 5px;
+    display: inline-block;
+    vertical-align:top;
+    width: 40%;
+    height: 100%;
+  }
 
-.search-field-container {
-  margin: 10px auto;
-  width: 80%;
-}
+  .search-field-container {
+    margin: 10px auto;
+    width: 80%;
+  }
 
-.search-field {
-  padding: .5em .6em;
-  display: inline-block;
-  border: 1px solid #ccc;
-  box-shadow: inset 0 1px 3px #ddd;
-  border-radius: 4px;
-  vertical-align: middle;
-  box-sizing: border-box;
-  width: 100%;
-  color: #333 !important;
-}
+  .search-field {
+    padding: .5em .6em;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-shadow: inset 0 1px 3px #ddd;
+    border-radius: 4px;
+    vertical-align: middle;
+    box-sizing: border-box;
+    width: 100%;
+    color: #333 !important;
+  }
 
-.results-container {
-  height: calc(100% - 63px);
-  overflow: auto;
-}
+  .results-container {
+    height: calc(100% - 63px);
+    overflow: auto;
+  }
 
-.result {
-  cursor: pointer;
-}
+  .result {
+    cursor: pointer;
+  }
 
-.result-icon {
-  float: right;
-}
+  .result-icon {
+    float: right;
+  }
 </style>

@@ -9,7 +9,7 @@ module.exports = {
     filename: 'build.js'
   },
   resolveLoader: {
-    root: path.join(__dirname, 'node_modules'),
+    root: path.join(__dirname, 'node_modules')
   },
   module: {
     loaders: [
@@ -40,7 +40,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: "style-loader!css-loader"
+        loader: 'style-loader!css-loader'
       }
     ]
   },
@@ -51,8 +51,8 @@ module.exports = {
 };
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports.devtool = '#source-map'
-  // http://vuejs.github.io/vue-loader/workflow/production.html
+  module.exports.devtool = '#source-map';
+    // http://vuejs.github.io/vue-loader/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
       'process.env': {
@@ -61,9 +61,9 @@ if (process.env.NODE_ENV === 'production') {
     }),
     new webpack.optimize.UglifyJsPlugin({
       mangle: true,
-      compress: { warnings: false },
-      output: { comments: false }
+      compress: {warnings: false},
+      output: {comments: false}
     }),
     new webpack.optimize.OccurenceOrderPlugin()
-  ])
+  ]);
 }

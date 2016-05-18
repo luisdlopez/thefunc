@@ -6,6 +6,7 @@
   "node-main": "services/index.js",
   "private": true,
   "scripts": {
+    "lint": "eslint ./ ./**/*.vue",
     "watch": "webpack-dev-server --inline --hot",
     "dev": "webpack-dev-server --inline --hot | npm start",
     "build": "NODE_ENV=production webpack",
@@ -36,6 +37,9 @@
     "babel-preset-stage-2": "^6.0.0",
     "cross-env": "^1.0.6",
     "css-loader": "^0.23.1",
+    "eslint": "^2.10.2",
+    "eslint-plugin-html": "^1.4.0",
+    "eslint-plugin-json": "^1.2.0",
     "file-loader": "^0.8.4",
     "json-loader": "^0.5.4",
     "style-loader": "^0.13.1",

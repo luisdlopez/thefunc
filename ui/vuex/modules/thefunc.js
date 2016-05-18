@@ -1,15 +1,20 @@
+/*global pubsub:true*/
+/*eslint no-undef: "error"*/
+
+'use strict';
+
 import fuzzy from 'fuzzy';
-var beautify = require('js-beautify').js_beautify;
+const beautify = require('js-beautify').js_beautify;
 import _ from 'lodash';
 
-let jsBeautifyOptions = {
+const jsBeautifyOptions = {
   indent_size: 2,
   preserve_newlines: true,
   break_chained_methods: true,
   end_with_newline: true
 };
 
-let newProjectTemplate = {
+const newProjectTemplate = {
   path: '',
   scanned: false,
   lastScan: null,
@@ -58,7 +63,7 @@ export const mutations = {
   SHOW_PREVIEW (state, resultIndex, parsedFunctionIndex) {
     let activeProject = state.projects[state.activeProject];
     activeProject.views[0].results = activeProject.views[0].results.map((result, index) => {
-      return _.assign({}, result, { clicked: index === resultIndex })
+      return _.assign({}, result, {clicked: index === resultIndex});
     });
     let formattedContent = beautify(activeProject.scan.parsedFunctions[parsedFunctionIndex].content, jsBeautifyOptions);
     activeProject.views[0].preview = `\n${formattedContent}`;
@@ -97,27 +102,26 @@ export const mutations = {
     activeProject.views.push({
       title: functionName,
       functions: [
-        // [`\n${content}`]
-        [_.assign({}, func, { content: `\n${formattedContent}` })]
+        [_.assign({}, func, {content: `\n${formattedContent}`})]
       ]
     });
-    activeProject.activeView = activeProject.views.length - 1
+    activeProject.activeView = activeProject.views.length - 1;
   },
 
   OPEN_FUNCTION (state, options) {
-    let activeProject = state.projects[state.activeProject];
-    let activeView = activeProject.views[activeProject.activeView];
-    let parsedFunctions = activeProject.scan.parsedFunctions;
+    const activeProject = state.projects[state.activeProject];
+    const activeView = activeProject.views[activeProject.activeView];
+    const parsedFunctions = activeProject.scan.parsedFunctions;
 
-    let func = parsedFunctions.find(func => func.name.includes(options.functionName));
-    let formattedContent = beautify(func.content, jsBeautifyOptions);
-    let columnIndex = options.position[0] + 1;
+    const func = parsedFunctions.find(func => func.name.includes(options.functionName));
+    const formattedContent = beautify(func.content, jsBeautifyOptions);
+    const columnIndex = options.position[0] + 1;
 
     if (!activeView.functions[columnIndex]) {
-      activeView.functions.push([_.assign({}, func, { content: `\n${formattedContent}` })]);
+      activeView.functions.push([_.assign({}, func, {content: `\n${formattedContent}`})]);
     }
     else {
-      activeView.functions[columnIndex].push(_.assign({}, func, { content: `\n${formattedContent}` }));
+      activeView.functions[columnIndex].push(_.assign({}, func, {content: `\n${formattedContent}`}));
     }
   }
 

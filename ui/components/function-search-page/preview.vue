@@ -5,50 +5,60 @@
       <div class="preview-editor" v-ace="functionSelected"></div>
     </div>
 
-  <div>
+  </div>
 </template>
 
 <script type="text/babel">
-export default {
-  props: ['functionSelected'],
-  directives: {
-    ace: {
-      bind: function() {
-        this.editor = ace.edit(this.el);
-        this.editor.setOptions({
-          maxLines: 100,
-          readOnly: false,
-          showGutter: true
-        });
-//        this.editor.setTheme("ace/theme/monokai");
-        this.editor.session.setMode("ace/mode/javascript");
-      },
-      update: function(value) {
-        this.editor.setValue(value, -1);
+  /*global ace:true*/
+  /*eslint no-undef: "error"*/
+
+  export default {
+    props: ['functionSelected'],
+    directives: {
+      ace: {
+
+        bind: function() {
+          this.editor = ace.edit(this.el);
+          this.editor.setOptions({
+            maxLines: 100,
+            readOnly: false,
+            showGutter: true
+          });
+          // this.editor.setTheme('ace/theme/monokai');
+          this.editor.session.setMode('ace/mode/javascript');
+        },
+
+        update: function(value) {
+          this.editor.setValue(value, -1);
+        },
+
+        unbind: function () {
+          this.editor.destroy();
+        }
+
       }
     }
-  }
-}
+  };
 </script>
 
 <style>
-.preview-container {
-  display: inline-block;
-  vertical-align:top;
-  width: 59%;
-  height: 100%;
-}
+  .preview-container {
+    display: inline-block;
+    vertical-align:top;
+    width: 59%;
+    height: 100%;
+  }
 
-.preview-editor-container {
-  position: relative;
-  width: 100%;
-}
+  .preview-editor-container {
+    position: relative;
+    width: 100%;
+  }
 
-.preview-editor {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
+  .preview-editor {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
 </style>

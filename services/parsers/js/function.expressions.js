@@ -1,6 +1,8 @@
+'use strict';
+
 let _ = require('lodash');
 
-exports.get = function getFunctionExpressions(content, parsedContent) {
+exports.get = function getFunctionExpressions (content, parsedContent) {
   let functionObjects = findFunctionExpressions(parsedContent);
   return functionObjects.map(functionObject => {
     let name = `${functionObject.id.name}`;
@@ -15,11 +17,11 @@ exports.get = function getFunctionExpressions(content, parsedContent) {
 };
 
 // handles syntax 'let name = function() {}' and 'let name = () => {}'
-function findFunctionExpressions(obj) {
+function findFunctionExpressions (obj) {
   if (_.has(obj, 'type') && obj.type === 'VariableDeclarator' && obj.init &&
       (obj.init.type === 'FunctionExpression' || obj.init.type === 'ArrowFunctionExpression')) {
     return [obj];
   }
 
-  return _.flatten(_.map(obj, v => typeof v === "object" ? findFunctionExpressions(v) : []), true);
+  return _.flatten(_.map(obj, v => typeof v === 'object' ? findFunctionExpressions(v) : []), true);
 }

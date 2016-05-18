@@ -1,3 +1,5 @@
+'use strict';
+
 export const scanFolder = makeAction('SCAN_FOLDER');
 export const searchFunction = makeAction('SEARCH_FUNCTION');
 export const showPreview = makeAction('SHOW_PREVIEW');
@@ -10,5 +12,5 @@ export const startFunctionNavigation = makeAction('START_FUNCTION_NAVIGATION');
 export const openFunction = makeAction('OPEN_FUNCTION');
 
 function makeAction (type) {
-  return ({ dispatch }, ...args) => dispatch(type, ...args)
+  return ({dispatch}, ...args) => dispatch(type, ...args);
 }

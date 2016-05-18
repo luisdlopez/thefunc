@@ -25,25 +25,25 @@
 </template>
 
 <script type="text/babel">
-export default {
-  props: ['projects', 'activeIndex'],
-  methods: {
-    tabClicked: function (index) {
-      this.$dispatch('project-tab-clicked', index);
-    },
-    addNewProject: function() {
-      this.$dispatch('add-new-project');
-    },
-    closeTab: function(index) {
-      this.$dispatch('close-project-tab', index);
+  export default {
+    props: ['projects', 'activeIndex'],
+    methods: {
+      tabClicked: function (index) {
+        this.$dispatch('project-tab-clicked', index);
+      },
+      addNewProject: function() {
+        this.$dispatch('add-new-project');
+      },
+      closeTab: function(index) {
+        this.$dispatch('close-project-tab', index);
+      }
     }
-  }
-}
+  };
 </script>
 
 <style>
-.close-project-icon {
-  float: right;
-  margin-left: 15px !important;
-}
+  .close-project-icon {
+    float: right;
+    margin-left: 15px !important;
+  }
 </style>

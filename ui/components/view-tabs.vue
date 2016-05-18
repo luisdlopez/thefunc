@@ -20,22 +20,22 @@
 </template>
 
 <script type="text/babel">
-export default {
-  props: ['views', 'activeView'],
-  methods: {
-    tabClicked: function (index) {
-      this.$dispatch('view-tab-clicked', index);
-    },
-    closeTab: function(index) {
-      this.$dispatch('close-view-tab', index);
+  export default {
+    props: ['views', 'activeView'],
+    methods: {
+      tabClicked: function (index) {
+        this.$dispatch('view-tab-clicked', index);
+      },
+      closeTab: function(index) {
+        this.$dispatch('close-view-tab', index);
+      }
     }
-  }
-}
+  };
 </script>
 
 <style>
-.close-view-icon {
-  float: right;
-  margin-left: 15px !important;
-}
+  .close-view-icon {
+    float: right;
+    margin-left: 15px !important;
+  }
 </style>

@@ -15,26 +15,26 @@
 </template>
 
 <script type="text/babel">
-import SearchComponent from './search.vue';
-import PreviewComponent from './preview.vue';
+  import SearchComponent from './search.vue';
+  import PreviewComponent from './preview.vue';
 
-export default {
-  props: ['activeProject'],
-  components: {
-    'search': SearchComponent,
-    'preview': PreviewComponent,
-  },
-  methods: {
-    searchResultClicked: function(index) {
-      this.$dispatch('search-result-clicked', index);
+  export default {
+    props: ['activeProject'],
+    components: {
+      'search': SearchComponent,
+      'preview': PreviewComponent
+    },
+    methods: {
+      searchResultClicked: function(index) {
+        this.$dispatch('search-result-clicked', index);
+      }
     }
-  }
-}
+  };
 </script>
 
 <style>
-.search-page-container {
-  height: calc(100% - 49px);
-  width: 100%;
-}
+  .search-page-container {
+    height: calc(100% - 49px);
+    width: 100%;
+  }
 </style>

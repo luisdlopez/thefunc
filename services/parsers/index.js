@@ -1,8 +1,8 @@
-// TODO: allow for different language parsers
+'use strict';
 
-let _ = require('lodash');
+// TODO: allow for different language parsers
 let jsParser = require('./js');
 
-exports.parse = function parse(content) {
+exports.parse = function parse (content) {
   return jsParser.getFunctions(content);
 };

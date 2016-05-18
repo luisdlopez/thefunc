@@ -1,3 +1,5 @@
+'use strict';
+
 // TODO: file extensions should be decided by the user
 // TODO: exclude node_modules should be optional (decided by user)
 // TODO: handle errors!
@@ -5,10 +7,10 @@
 let dir = require('node-dir');
 let parsers = require('../parsers');
 
-exports.scanFolder = function scanFolder(folder) {
+exports.scanFolder = function scanFolder (folder) {
   let functions = [];
 
-  function fileCallback(error, content, next) {
+  function fileCallback (error, content, next) {
     if (error) {
       // TODO: add errors in a log to show user
       next();
@@ -17,7 +19,7 @@ exports.scanFolder = function scanFolder(folder) {
     try {
       let parsedFunctions = parsers.parse(content);
       functions.push(...parsedFunctions);
-    } catch(error) {
+    } catch (error) {
       // TODO: add errors in a log to show user
     }
 
@@ -30,11 +32,11 @@ exports.scanFolder = function scanFolder(folder) {
       excludeDir: ['node_modules', 'dist']
     };
 
-    function finishedCallback(error, files){
+    function finishedCallback (error) {
       if (error) reject(error);
       resolve(functions);
     }
 
     dir.readFiles(folder, options, fileCallback, finishedCallback);
   });
-}
+};
