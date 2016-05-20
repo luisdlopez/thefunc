@@ -7,9 +7,9 @@
 
         <div class="view-editor-container"
               v-for="(funcIndex, func) in column" track-by="$index"
-             v-bind:style="{ height: (func.content.split('\n').length * 16 + 32) + 'px' }">
+              v-bind:style="{ height: (func.content.split('\n').length * 16 + 32) + 'px' }">
 
-          <div class="view-editor" v-ace="{ content: func.content, position: [columnIndex, funcIndex] }"></div>
+          <ace-navigation :func="func" :position="[columnIndex, funcIndex]"></ace-navigation>
 
         </div>
 
@@ -21,93 +21,12 @@
 </template>
 
 <script type="text/babel">
-  /*global ace:true*/
-  /*eslint no-undef: "error"*/
-
-  import $ from 'jquery';
+  import aceNavigationComponent from '../ace-editors/ace-editor-navigation.vue';
 
   export default {
     props: ['functions'],
-    vuex: {
-      getters: {
-        activeProject: state => state.projects[state.activeProject]
-      }
-    },
-    methods: {
-      openFunction: function(options) {
-        this.$dispatch('open-function', options);
-      }
-    },
-    directives: {
-
-      ace: {
-
-        bind: function() {
-          let el = this.el;
-          this.editor = ace.edit(el);
-          this.editorPosition = null;
-          this.editor.setOptions({
-            maxLines: 100,
-            readOnly: false,
-            showGutter: true
-          });
-          // this.editor.setTheme('ace/theme/monokai');
-          this.editor.session.setMode('ace/mode/javascript');
-
-          this.el.addEventListener('keydown', event => {
-            let COMMAND_KEY_CODE = 91;
-            let CTRL_KEY_CODE = 17;
-
-            if (event.which === COMMAND_KEY_CODE || event.which === CTRL_KEY_CODE) {
-
-              $(el)
-                .find('.ace_identifier,.ace_function').not('.ace_name')
-                .toArray()
-                .forEach(candidate => {
-                  candidate = $(candidate);
-                  let innerText = candidate[0].innerText;
-
-                  let activeProject = this.vm.activeProject;
-                  let parsedFunctions = activeProject.scan.functionNames;
-
-                  if (parsedFunctions.find(funcName => funcName.includes(innerText))) {
-
-                    candidate.addClass('highlight-function-call');
-                    candidate.on('click', () => {
-                      // TODO: call service to retrieve functions with innertText name
-                      // if only one found, simply open the new function
-                      // if more than one, open some sort of menu to let
-                      // user chose the function
-                      this.vm.openFunction({ functionName: innerText, position: this.editorPosition});
-                    });
-
-                  }
-
-                });
-
-            }
-          });
-
-          el.addEventListener('keyup', () => {
-            $(el)
-              .find('.ace_identifier,.ace_function')
-              .not('.ace_name')
-              .removeClass('highlight-function-call')
-              .unbind('click');
-          });
-
-        },
-
-        update: function(options) {
-          this.editor.setValue(options.content, -1);
-          this.editorPosition = options.position;
-        },
-
-        unbind: function () {
-          this.editor.destroy();
-        }
-
-      }
+    components: {
+      'ace-navigation': aceNavigationComponent
     }
   };
 </script>
@@ -137,14 +56,6 @@
   .view-editor-container {
     display: block;
     position: relative;
-  }
-
-  .view-editor {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
   }
 
   .highlight-function-call {

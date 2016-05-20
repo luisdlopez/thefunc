@@ -2,41 +2,19 @@
   <div class="preview-container">
 
     <div class="preview-editor-container">
-      <div class="preview-editor" v-ace="functionSelected"></div>
+      <ace-preview :function-selected="functionSelected"></ace-preview>
     </div>
 
   </div>
 </template>
 
 <script type="text/babel">
-  /*global ace:true*/
-  /*eslint no-undef: "error"*/
+  import acePreviewComponent from '../ace-editors/ace-editor-preview.vue';
 
   export default {
     props: ['functionSelected'],
-    directives: {
-      ace: {
-
-        bind: function() {
-          this.editor = ace.edit(this.el);
-          this.editor.setOptions({
-            maxLines: 100,
-            readOnly: false,
-            showGutter: true
-          });
-          // this.editor.setTheme('ace/theme/monokai');
-          this.editor.session.setMode('ace/mode/javascript');
-        },
-
-        update: function(value) {
-          this.editor.setValue(value, -1);
-        },
-
-        unbind: function () {
-          this.editor.destroy();
-        }
-
-      }
+    components: {
+      'ace-preview': acePreviewComponent
     }
   };
 </script>
@@ -52,13 +30,5 @@
   .preview-editor-container {
     position: relative;
     width: 100%;
-  }
-
-  .preview-editor {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
   }
 </style>
