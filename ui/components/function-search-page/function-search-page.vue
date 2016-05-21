@@ -15,8 +15,8 @@
 </template>
 
 <script type="text/babel">
-  import SearchComponent from './search.vue';
-  import PreviewComponent from './preview.vue';
+  import SearchComponent from './search-container.vue';
+  import PreviewComponent from './preview-container.vue';
 
   export default {
     props: ['activeProject'],

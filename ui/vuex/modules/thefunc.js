@@ -3,7 +3,8 @@
 
 'use strict';
 
-import fuzzy from 'fuzzy';
+// import fuzzy from 'fuzzy';
+const searchService = require('../../../services/function-search');
 const beautify = require('js-beautify').js_beautify;
 import _ from 'lodash';
 
@@ -55,9 +56,7 @@ export const mutations = {
 
   SEARCH_FUNCTION (state, search) {
     let activeProject = state.projects[state.activeProject];
-    // apply fuzzy search on name property
-    activeProject.views[0].search = search;
-    activeProject.views[0].results = fuzzy.filter(search, activeProject.scan.functionNames);
+    activeProject.views[0].results = searchService.search(activeProject, search);
   },
 
   SHOW_PREVIEW (state, resultIndex, parsedFunctionIndex) {
@@ -109,7 +108,9 @@ export const mutations = {
   },
 
   OPEN_FUNCTION (state, options) {
-    const activeProject = state.projects[state.activeProject];
+    // TODO: call search.navigate function
+    
+    /*const activeProject = state.projects[state.activeProject];
     const activeView = activeProject.views[activeProject.activeView];
     const parsedFunctions = activeProject.scan.parsedFunctions;
 
@@ -122,7 +123,7 @@ export const mutations = {
     }
     else {
       activeView.functions[columnIndex].push(_.assign({}, func, {content: `\n${formattedContent}`}));
-    }
+    }*/
   }
 
 };
