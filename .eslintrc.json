@@ -6,7 +6,6 @@
     "node": true
   },
   "plugins": [
-    "json",
     "html"
   ],
   "extends": "eslint:recommended",

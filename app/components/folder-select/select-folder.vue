@@ -1,15 +1,11 @@
 <template>
   <div class="select-folder-container">
 
-    <div class="ui black basic button file-upload">
-    {{ folderName || 'Select Folder' }}
-    <input v-el:dialog
-        id="dialog"
-        type="file"
-        nwdirectory
-        v-on:change="folderSelected"
-        class="upload"/>
-    </div>
+    <button type="button"
+            class="ui black basic button scan-folder"
+            v-on:click="folderSelected">
+      {{ folderName || 'Select Folder' }}
+    </button>
 
     <button type="button"
         v-on:click="scan"
@@ -25,6 +21,9 @@
 </template>
 
 <script type="text/babel">
+  /*eslint no-console: ["error", { allow: ["log", "error"] }] */
+  const {dialog} = require('electron').remote;
+
   export default {
     data() {
       return {
@@ -39,13 +38,15 @@
       }
     },
     methods: {
-      folderSelected: function(e) {
-        e.preventDefault();
-        this.path = e.target.files[0].path;
-      },
       scan: function() {
         this.scanStarted = true;
         this.$dispatch('folder-selected', this.path);
+      },
+      folderSelected: function() {
+        const selectedFolder = dialog.showOpenDialog({properties: ['openDirectory']});
+        if (selectedFolder.length && !!selectedFolder[0]) {
+          this.path = selectedFolder[0];
+        }
       }
     }
   };
@@ -59,14 +60,14 @@
     justify-content: center;
     align-items: center;
   }
-  
+
   .file-upload,
   .scan-folder {
     position: relative;
     width: 25%;
     margin-bottom: 1rem !important;
   }
-  
+
   .file-upload input.upload {
     position: absolute;
     top: 0;

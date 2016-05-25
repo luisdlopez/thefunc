@@ -34,3 +34,10 @@ node_modules
 
 dist
 .idea
+.DS_Store
+Thumbs.db
+app/dist/
+dist/
+releases/
+selenium-debug.log
+test/unit/coverage

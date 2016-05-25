@@ -33,7 +33,7 @@ exports.search = (activeProject, search) => {
 };
 
 // called from ace editor, function navigation (exact search)
-exports.navigate = (activeProject, {functionName, position}) => {
+exports.navigate = (activeProject, {functionName/*, position*/}) => {
   const parsedFunctions = activeProject.scan.parsedFunctions;
   let results = parsedFunctions.find(mapToFunctionName(functionName));
   return results.filter(result => !!result);

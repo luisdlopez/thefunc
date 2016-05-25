@@ -3,8 +3,7 @@
 
 'use strict';
 
-// import fuzzy from 'fuzzy';
-const searchService = require('../../../services/function-search');
+const searchService = require('../../services/function-search');
 const beautify = require('js-beautify').js_beautify;
 import _ from 'lodash';
 
@@ -107,9 +106,9 @@ export const mutations = {
     activeProject.activeView = activeProject.views.length - 1;
   },
 
-  OPEN_FUNCTION (state, options) {
+  OPEN_FUNCTION () { // state, options
     // TODO: call search.navigate function
-    
+
     /*const activeProject = state.projects[state.activeProject];
     const activeView = activeProject.views[activeProject.activeView];
     const parsedFunctions = activeProject.scan.parsedFunctions;

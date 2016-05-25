@@ -38,5 +38,5 @@
         this.$dispatch('start-function-navigation', functionString, parsedFunctionIndex);
       }
     }
-  }
+  };
 </script>

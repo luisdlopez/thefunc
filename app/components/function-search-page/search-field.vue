@@ -34,5 +34,5 @@
         this.$dispatch('search-updated', this.search);
       }
     }
-  }
+  };
 </script>
