@@ -1,8 +1,8 @@
-var path = require('path')
-var webpack = require('webpack')
-var config = require('../config')
-var cssLoaders = require('./css-loaders')
-var projectRoot = path.resolve(__dirname, '../')
+var path = require('path');
+var webpack = require('webpack');
+var config = require('../config');
+var cssLoaders = require('./css-loaders');
+var projectRoot = path.resolve(__dirname, '../');
 
 module.exports = {
   // Note: entry points are added by environment-specific configs.
@@ -14,7 +14,7 @@ module.exports = {
   // Use target 'node' so that __dirname works properly. We then need
   // to manually specify the electron modules in the ExternalsPlugin
   // since we're not using target 'electron'.
-  target: 'node',
+  target: 'electron-renderer',
   node: {
     __filename: false,
     __dirname: false

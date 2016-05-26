@@ -21,7 +21,6 @@
 </template>
 
 <script type="text/babel">
-  /*eslint no-console: ["error", { allow: ["log", "error"] }] */
   const {dialog} = require('electron').remote;
 
   export default {
@@ -44,7 +43,7 @@
       },
       folderSelected: function() {
         const selectedFolder = dialog.showOpenDialog({properties: ['openDirectory']});
-        if (selectedFolder.length && !!selectedFolder[0]) {
+        if (selectedFolder && selectedFolder.length && !!selectedFolder[0]) {
           this.path = selectedFolder[0];
         }
       }

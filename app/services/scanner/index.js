@@ -1,7 +1,9 @@
+/*eslint no-console: ["error", { allow: ["log"] }] */
+
 'use strict';
 
 // TODO: file extensions should be decided by the user
-// TODO: exclude node_modules should be optional (decided by user)
+// TODO: exclude folders as selected by user (node_modules as recommended)
 // TODO: handle errors!
 
 let dir = require('node-dir');
@@ -29,7 +31,7 @@ exports.scanFolder = function scanFolder (folder) {
   return new Promise((resolve, reject) => {
     let options = {
       match: /.js$/,
-      excludeDir: ['node_modules', 'dist']
+      excludeDir: ['node_modules', 'dist', 'build', 'static']
     };
 
     function finishedCallback (error) {

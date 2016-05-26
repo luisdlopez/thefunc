@@ -72,8 +72,8 @@
       'close-view-tab': function(index) {
         this.closeViewTab(index);
       },
-      'start-function-navigation': function(functionName, parsedFunctionIndex) {
-        this.startFunctionNavigation(functionName, parsedFunctionIndex);
+      'start-function-navigation': function(parsedFunctionIndex) {
+        this.startFunctionNavigation(parsedFunctionIndex);
       },
       'open-function': function(options) {
         this.openFunction(options);

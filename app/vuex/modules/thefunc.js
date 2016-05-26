@@ -1,9 +1,8 @@
-/*global pubsub:true*/
-/*eslint no-undef: "error"*/
-
+/*eslint no-console: ["error", { allow: ["log"] }] */
 'use strict';
 
 const searchService = require('../../services/function-search');
+const scanner = require('../../services/scanner');
 const beautify = require('js-beautify').js_beautify;
 import _ from 'lodash';
 
@@ -41,16 +40,16 @@ export const state = {
 export const mutations = {
 
   SCAN_FOLDER (state, path) {
-    pubsub.subscribe('scan-completed', functions => {
-      let activeProject = state.projects[state.activeProject];
-      activeProject.path = path;
-      activeProject.scanned = true;
-      activeProject.lastScan = new Date();
-      activeProject.scan.parsedFunctions = functions;
-      activeProject.scan.functionNames = _.map(functions, 'name');
-    });
-
-    pubsub.publish('start-scan', path);
+    scanner
+      .scanFolder(path)
+      .then(functions => {
+        let activeProject = state.projects[state.activeProject];
+        activeProject.path = path;
+        activeProject.scanned = true;
+        activeProject.lastScan = new Date();
+        activeProject.scan.parsedFunctions = functions;
+        activeProject.scan.functionNames = _.map(functions, 'name');
+      });
   },
 
   SEARCH_FUNCTION (state, search) {
@@ -92,13 +91,13 @@ export const mutations = {
     activeProject.activeView = index - 1;
   },
 
-  START_FUNCTION_NAVIGATION (state, functionName, parsedFunctionIndex) {
+  START_FUNCTION_NAVIGATION (state, parsedFunctionIndex) {
     let activeProject = state.projects[state.activeProject];
     let func = activeProject.scan.parsedFunctions[parsedFunctionIndex];
     let formattedContent = beautify(func.content, jsBeautifyOptions);
 
     activeProject.views.push({
-      title: functionName,
+      title: func.name,
       functions: [
         [_.assign({}, func, {content: `\n${formattedContent}`})]
       ]
