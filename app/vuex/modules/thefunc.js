@@ -105,14 +105,11 @@ export const mutations = {
     activeProject.activeView = activeProject.views.length - 1;
   },
 
-  OPEN_FUNCTION () { // state, options
-    // TODO: call search.navigate function
-
-    /*const activeProject = state.projects[state.activeProject];
+  OPEN_FUNCTION (state, options) {
+    const activeProject = state.projects[state.activeProject];
     const activeView = activeProject.views[activeProject.activeView];
-    const parsedFunctions = activeProject.scan.parsedFunctions;
 
-    const func = parsedFunctions.find(func => func.name.includes(options.functionName));
+    const func = options.func;
     const formattedContent = beautify(func.content, jsBeautifyOptions);
     const columnIndex = options.position[0] + 1;
 
@@ -121,7 +118,7 @@ export const mutations = {
     }
     else {
       activeView.functions[columnIndex].push(_.assign({}, func, {content: `\n${formattedContent}`}));
-    }*/
+    }
   }
 
 };

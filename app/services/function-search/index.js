@@ -19,7 +19,8 @@ function mapToFunctionName(functionName) {
   return (parsedFunction, index) => {
     const match = parsedFunction.name.includes(functionName);
     if (match) {
-      return { name: parsedFunction.name, index };
+      // return { name: parsedFunction.name, index };
+      return { func: parsedFunction, index };
     }
     return null;
   };
@@ -33,8 +34,8 @@ exports.search = (activeProject, search) => {
 };
 
 // called from ace editor, function navigation (exact search)
-exports.navigate = (activeProject, {functionName/*, position*/}) => {
+exports.navigate = (activeProject, functionName) => {
   const parsedFunctions = activeProject.scan.parsedFunctions;
-  let results = parsedFunctions.find(mapToFunctionName(functionName));
+  let results = parsedFunctions.map(mapToFunctionName(functionName));
   return results.filter(result => !!result);
 };

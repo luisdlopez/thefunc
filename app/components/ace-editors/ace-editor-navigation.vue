@@ -20,6 +20,7 @@
   /*eslint no-undef: "error"*/
 
   import $ from 'jquery';
+  const functionSearch = require('../../services/function-search');
 
   let keyDownListener = function(event) {
     let COMMAND_KEY_CODE = 91;
@@ -33,19 +34,16 @@
         .forEach(candidate => {
           candidate = $(candidate);
           const innerText = candidate[0].innerText;
-          const parsedFunctions = this.vm.activeProject.scan.functionNames;
+          const foundFunctions = functionSearch.navigate(this.vm.activeProject, innerText);
 
-          if (parsedFunctions.find(funcName => funcName.includes(innerText))) {
-
+          if (foundFunctions && foundFunctions.length) {
             candidate.addClass('highlight-function-call');
             candidate.on('click', () => {
-              // TODO: call service to retrieve functions with innertText name
-              // if only one found, simply open the new function
-              // if more than one, open some sort of menu to let
-              // user chose the function
-              this.vm.openFunction({ functionName: innerText, position: this.editorPosition});
+              if (foundFunctions.length === 1) {
+                this.vm.openFunction({ func: foundFunctions[0].func, position: this.editorPosition});
+              }
+              // TODO: else, show popup with all possible choices
             });
-
           }
 
         });
