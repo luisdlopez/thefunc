@@ -1,6 +1,11 @@
 <template>
   <div class="function-navigation-page-container">
 
+    <div class="ui special popup">
+      <div class="header">Custom Header</div>
+      <div class="ui button">Click Me</div>
+    </div>
+
     <div class="view-container">
 
       <div class="column" v-for="(columnIndex, column) in functions" track-by="$index">
@@ -14,7 +19,7 @@
         </div>
 
       </div>
-      
+
     </div>
 
   </div>

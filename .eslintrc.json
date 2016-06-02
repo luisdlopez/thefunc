@@ -3,7 +3,8 @@
     "browser": true,
     "commonjs": true,
     "es6": true,
-    "node": true
+    "node": true,
+    "jquery": true
   },
   "plugins": [
     "html"
@@ -28,6 +29,7 @@
     "semi": [
       "error",
       "always"
-    ]
+    ],
+    "no-console": 0
   }
 }

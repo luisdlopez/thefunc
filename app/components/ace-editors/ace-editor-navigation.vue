@@ -19,7 +19,6 @@
   /*global ace:true*/
   /*eslint no-undef: "error"*/
 
-  import $ from 'jquery';
   const functionSearch = require('../../services/function-search');
 
   let keyDownListener = function(event) {
@@ -42,7 +41,13 @@
               if (foundFunctions.length === 1) {
                 this.vm.openFunction({ func: foundFunctions[0].func, position: this.editorPosition});
               }
-              // TODO: else, show popup with all possible choices
+              else {
+                candidate
+                  .popup({
+                    popup: $('.special.popup')
+                  })
+                  .popup('toggle');
+              }
             });
           }
 

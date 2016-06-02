@@ -4,9 +4,6 @@
     <meta charset="utf-8">
     <title>TheFunc</title>
 
-    <script src="static/electron_boilerplate/context_menu.js"></script>
-    <script src="static/electron_boilerplate/external_links.js"></script>
-
     <link rel="stylesheet" href="static/styles/reset.css">
     <link rel="stylesheet" href="static/styles/semantic.css">
     <link rel="stylesheet" href="static/styles/tab.css">
@@ -14,11 +11,28 @@
     <link rel="stylesheet" href="static/styles/input.css">
     <link rel="stylesheet" href="static/styles/table.css">
     <link rel="stylesheet" href="static/styles/icon.css">
+    <link rel="stylesheet" href="static/styles/popup.css">
+    <link rel="stylesheet" href="static/styles/transition.css">
     <link rel="stylesheet" href="static/styles/app.css">
+
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+
     <script src="static/ace-builds/src-min-noconflict/ace.js"></script>
+    <script src="static/jquery.js"></script>
+
+    <script>if (window.module) module = window.module;</script>
+
   </head>
   <body>
+
+    <!--<script>window.$ = window.jQuery = require('./static/jquery.js');</script>-->
+    <script>console.log(window.$)</script>
+
     <app></app>
     <!-- built files will be auto injected -->
+
+    <script src="static/popup.js"></script>
+    <script src="static/transition.js"></script>
+
   </body>
 </html>
