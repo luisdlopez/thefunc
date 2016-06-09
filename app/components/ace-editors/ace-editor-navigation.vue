@@ -20,8 +20,11 @@
   /*eslint no-undef: "error"*/
 
   const functionSearch = require('../../services/function-search');
+  let keypressed = false; // avoid listening to keydown event while key is down
 
   let keyDownListener = function(event) {
+    if (keypressed) return;
+    keypressed = true;
     let COMMAND_KEY_CODE = 91;
     let CTRL_KEY_CODE = 17;
 
@@ -57,6 +60,7 @@
   };
 
   let keyUpListener = function() {
+    keypressed = false;
     $(this.el)
       .find('.ace_identifier,.ace_function')
       .not('.ace_name')
