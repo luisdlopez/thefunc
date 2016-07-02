@@ -1,13 +1,13 @@
 <template>
   <div id="app">
 
-    <project-tabs :projects="projectNames" :active-index="activeIndex"></project-tabs>
+    <project-tabs></project-tabs>
 
     <select-folder v-if="!activeProject.path"></select-folder>
 
     <div class="project-container" v-if="activeProject.scanned">
 
-      <view-tabs :views="views" :active-view="activeView"></view-tabs>
+      <view-tabs></view-tabs>
 
       <search-page v-if="activeView === 0" :active-project="activeProject"></search-page>
       <function-navigation-page v-if="activeView > 0" :functions="activeViewFunctions"></function-navigation-page>
@@ -17,7 +17,7 @@
   </div>
 </template>
 
-<script type="text/babel">
+<script  lang="babel">
   import ProjectTabsComponent from './project-tabs.vue';
   import ViewTabsComponent from './view-tabs.vue';
   import SelectFolderComponent from './folder-select/select-folder.vue';
@@ -48,29 +48,11 @@
       'function-navigation-page': FunctionNavigationComponent
     },
     events: {
-      'folder-selected': function(path) {
-        this.scanFolder(path);
-      },
       'search-updated': function(search) {
         this.searchFunction(search);
       },
       'search-result-clicked': function(resultIndex, parsedFunctionIndex) {
         this.showPreview(resultIndex, parsedFunctionIndex);
-      },
-      'project-tab-clicked': function(index) {
-        this.changeActiveProject(index);
-      },
-      'add-new-project': function() {
-        this.openNewProject();
-      },
-      'close-project-tab': function(index) {
-        this.closeProject(index);
-      },
-      'view-tab-clicked': function(index) {
-        this.changeActiveView(index);
-      },
-      'close-view-tab': function(index) {
-        this.closeViewTab(index);
       },
       'start-function-navigation': function(parsedFunctionIndex) {
         this.startFunctionNavigation(parsedFunctionIndex);

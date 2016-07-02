@@ -4,30 +4,36 @@
     <a class="item"
           v-for="view in views"
           track-by="$index"
-          v-bind:class="{ 'active': activeView === $index }">
+          :class="{ 'active': activeView === $index }">
 
-      <div v-on:click.stop.prevent="tabClicked($index)">
+      <div @click.stop.prevent="changeActiveView($index)">
         {{ view.title }}
       </div>
 
       <i v-if="$index > 0"
             class="remove icon close-view-icon"
-            v-on:click="closeTab($index)"></i>
+            @click="closeViewTab($index)"></i>
 
     </a>
 
   </div>
 </template>
 
-<script type="text/babel">
+<script lang="babel">
+  import {
+    changeActiveView,
+    closeViewTab
+  } from '../vuex/actions';
+
   export default {
-    props: ['views', 'activeView'],
-    methods: {
-      tabClicked: function (index) {
-        this.$dispatch('view-tab-clicked', index);
+    vuex: {
+      actions: {
+        changeActiveView,
+        closeViewTab
       },
-      closeTab: function(index) {
-        this.$dispatch('close-view-tab', index);
+      getters: {
+        views: state => state.projects[state.activeProject].views,
+        activeView: state => state.projects[state.activeProject].activeView
       }
     }
   };

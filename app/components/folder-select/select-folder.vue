@@ -3,12 +3,12 @@
 
     <button type="button"
             class="ui black basic button scan-folder"
-            v-on:click="folderSelected">
+            @click="folderSelected">
       {{ folderName || 'Select Folder' }}
     </button>
 
     <button type="button"
-        v-on:click="scan"
+        @click="scan"
         :disabled="!path || scanStarted"
         class="ui black basic button scan-folder">
 
@@ -20,10 +20,16 @@
   </div>
 </template>
 
-<script type="text/babel">
-  const {dialog} = require('electron').remote;
+<script lang="babel">
+  const { dialog } = require('electron').remote;
+  import { scanFolder } from '../../vuex/actions';
 
   export default {
+    vuex: {
+      actions: {
+        scanFolder
+      }
+    },
     data() {
       return {
         path: '',
@@ -39,7 +45,7 @@
     methods: {
       scan: function() {
         this.scanStarted = true;
-        this.$dispatch('folder-selected', this.path);
+        this.scanFolder(this.path);
       },
       folderSelected: function() {
         const selectedFolder = dialog.showOpenDialog({properties: ['openDirectory']});
