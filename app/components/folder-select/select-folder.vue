@@ -22,12 +22,12 @@
 
 <script lang="babel">
   const { dialog } = require('electron').remote;
-  import { scanFolder } from '../../vuex/actions';
+  import { startScan } from '../../vuex/actions';
 
   export default {
     vuex: {
       actions: {
-        scanFolder
+        startScan
       }
     },
     data() {
@@ -45,7 +45,7 @@
     methods: {
       scan: function() {
         this.scanStarted = true;
-        this.scanFolder(this.path);
+        this.startScan(this.path);
       },
       folderSelected: function() {
         const selectedFolder = dialog.showOpenDialog({properties: ['openDirectory']});

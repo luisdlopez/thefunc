@@ -1,8 +1,8 @@
 /*eslint no-console: ["error", { allow: ["log"] }] */
 'use strict';
 
+import * as mutationsTypes from '../mutation-types';
 const searchService = require('../../services/function-search');
-const scanner = require('../../services/scanner');
 const beautify = require('js-beautify').js_beautify;
 import _ from 'lodash';
 
@@ -39,25 +39,21 @@ export const state = {
 
 export const mutations = {
 
-  SCAN_FOLDER (state, path) {
-    scanner
-      .scanFolder(path)
-      .then(functions => {
-        let activeProject = state.projects[state.activeProject];
-        activeProject.path = path;
-        activeProject.scanned = true;
-        activeProject.lastScan = new Date();
-        activeProject.scan.parsedFunctions = functions;
-        activeProject.scan.functionNames = _.map(functions, 'name');
-      });
+  [mutationsTypes.SCAN_COMPLETED] (state, path, functions) {
+    let activeProject = state.projects[state.activeProject];
+    activeProject.path = path;
+    activeProject.scanned = true;
+    activeProject.lastScan = new Date();
+    activeProject.scan.parsedFunctions = functions;
+    activeProject.scan.functionNames = _.map(functions, 'name');
   },
 
-  SEARCH_FUNCTION (state, search) {
+  [mutationsTypes.SEARCH_FUNCTION] (state, search) {
     let activeProject = state.projects[state.activeProject];
     activeProject.views[0].results = searchService.search(activeProject, search);
   },
 
-  SHOW_PREVIEW (state, resultIndex, parsedFunctionIndex) {
+  [mutationsTypes.SHOW_PREVIEW] (state, resultIndex, parsedFunctionIndex) {
     let activeProject = state.projects[state.activeProject];
     activeProject.views[0].results = activeProject.views[0].results.map((result, index) => {
       return _.assign({}, result, {clicked: index === resultIndex});
@@ -66,32 +62,32 @@ export const mutations = {
     activeProject.views[0].preview = `\n${formattedContent}`;
   },
 
-  CHANGE_ACTIVE_PROJECT (state, index) {
+  [mutationsTypes.CHANGE_ACTIVE_PROJECT] (state, index) {
     state.activeProject = index;
   },
 
-  OPEN_NEW_PROJECT (state) {
+  [mutationsTypes.OPEN_NEW_PROJECT] (state) {
     state.projects.push(_.cloneDeepWith(newProjectTemplate));
     state.activeProject = state.projects.length - 1;
   },
 
-  CLOSE_PROJECT (state, index) {
+  [mutationsTypes.CLOSE_PROJECT] (state, index) {
     state.projects.splice(index, 1);
     state.activeProject = index - 1;
   },
 
-  CHANGE_ACTIVE_VIEW (state, index) {
+  [mutationsTypes.CHANGE_ACTIVE_VIEW] (state, index) {
     let activeProject = state.projects[state.activeProject];
     activeProject.activeView = index;
   },
 
-  CLOSE_VIEW_TAB (state, index) {
+  [mutationsTypes.CLOSE_VIEW_TAB] (state, index) {
     let activeProject = state.projects[state.activeProject];
     activeProject.views.splice(index, 1);
     activeProject.activeView = index - 1;
   },
 
-  START_FUNCTION_NAVIGATION (state, parsedFunctionIndex) {
+  [mutationsTypes.START_FUNCTION_NAVIGATION] (state, parsedFunctionIndex) {
     let activeProject = state.projects[state.activeProject];
     let func = activeProject.scan.parsedFunctions[parsedFunctionIndex];
     let formattedContent = beautify(func.content, jsBeautifyOptions);
@@ -105,7 +101,7 @@ export const mutations = {
     activeProject.activeView = activeProject.views.length - 1;
   },
 
-  OPEN_FUNCTION (state, options) {
+  [mutationsTypes.OPEN_FUNCTION] (state, options) {
     const activeProject = state.projects[state.activeProject];
     const activeView = activeProject.views[activeProject.activeView];
 

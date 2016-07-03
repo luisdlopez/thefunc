@@ -14,13 +14,13 @@ const store = new Vuex.Store({
 });
 
 if (module.hot) {
-  // accept actions and mutations as hot modules
+  // accept actions and mutationsTypes as hot modules
   module.hot.accept(['./modules/thefunc'], () => {
     // require the updated modules
     // have to add .default here due to babel 6 module output
     const newState = require('./modules/thefunc').state;
     const newMutations = require('./modules/thefunc').mutations;
-    // swap in the new actions and mutations
+    // swap in the new actions and mutationsTypes
     store.hotUpdate({
       state: newState,
       mutations: newMutations
