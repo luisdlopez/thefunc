@@ -10,9 +10,6 @@
     "package:win": "node build/package.js --platform=win32",
     "package:linux": "node build/package.js --platform=linux",
     "release": "npm run build && npm run package",
-    "unit": "karma start test/unit/karma.conf.js --single-run",
-    "e2e": "node test/e2e/runner.js",
-    "test": "npm run unit && npm run e2e"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
