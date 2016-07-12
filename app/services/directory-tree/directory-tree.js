@@ -21,7 +21,17 @@ function fileExtensionIsInvalid(acceptedFileExtensions, fileExtension) {
     acceptedFileExtensions.indexOf(fileExtension) === -1;
 }
 
-exports.directoryTree = function directoryTree(path, acceptedFileExtensions) => {
+/**
+ * usage:
+ *    var dirTree = require('./directory-tree');
+ *    var tree = dirTree('/some/path');
+ *    var filteredTree = dirTree('/some/path', ['.jpg', '.png']);
+ *
+ * @param {String} path
+ * @param {Array} acceptedFileExtensions
+ * @returns {Object} JSON object representing contents of a given path
+ */
+module.exports = function directoryTree(path, acceptedFileExtensions) {
   const item = itemFactory(path);
 
   let stats;
