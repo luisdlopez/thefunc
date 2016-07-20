@@ -1,7 +1,8 @@
 'use strict';
 
-exports = Object.freeze({
-  NOT_PARSED: 0,
-  PARSING: 1,
-  PARSED: 2
+module.exports = Object.freeze({
+  NOT_PARSED: 'notparsed',
+  PARSING: 'parsing',
+  PARSED: 'parsed',
+  PARSING_ERROR: 'parsingerror'
 });

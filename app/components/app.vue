@@ -1,17 +1,18 @@
 <template>
   <div id="app">
 
+    <!--Tabs for every opened project-->
     <project-tabs></project-tabs>
 
-    <select-folder v-if="!activeProject.path"></select-folder>
+    <!--Folder selection screen, displayed for new projects only-->
+    <select-folder v-if="newProject"></select-folder>
 
+    <!--Views for active, scanned project-->
     <div class="project-container" v-if="activeProject.scanned">
-
       <view-tabs></view-tabs>
-
-      <search-page v-if="activeView === 0" :active-project="activeProject"></search-page>
-      <function-navigation-page v-if="activeView > 0" :functions="activeViewFunctions"></function-navigation-page>
-
+      <directory-tree></directory-tree>
+      <!--<search-page v-if="activeView === 0" :active-project="activeProject"></search-page>-->
+      <!--<function-navigation-page v-if="activeView > 0" :functions="activeViewFunctions"></function-navigation-page>-->
     </div>
 
   </div>
@@ -21,8 +22,10 @@
   import ProjectTabsComponent from './project-tabs.vue';
   import ViewTabsComponent from './view-tabs.vue';
   import SelectFolderComponent from './folder-select/select-folder.vue';
-  import SearchComponent from './function-search-page/function-search-page.vue';
-  import FunctionNavigationComponent from './function-navigation-page/function-navigation-page.vue';
+  // TODO: look at these 2 components, possibly replace them
+  // import SearchComponent from './function-search-page/function-search-page.vue';
+  // import FunctionNavigationComponent from './function-navigation-page/function-navigation-page.vue';
+  import directoryTreeComponent from './directory-tree/directory-tree.vue';
   import * as actions from '../vuex/actions';
 
   export default {
@@ -31,6 +34,7 @@
       getters: {
         activeIndex: state => state.activeProject,
         activeProject: state => state.projects[state.activeProject],
+        newProject: state => !state.projects[state.activeProject].path,
         projectNames: state => state.projects.map(project => project.path),
         views: state => state.projects[state.activeProject].views,
         activeView: state => state.projects[state.activeProject].activeView,
@@ -42,10 +46,11 @@
     },
     components: {
       'project-tabs': ProjectTabsComponent,
-      'view-tabs': ViewTabsComponent,
       'select-folder': SelectFolderComponent,
-      'search-page':SearchComponent,
-      'function-navigation-page': FunctionNavigationComponent
+      'view-tabs': ViewTabsComponent,
+      'directory-tree': directoryTreeComponent
+      // 'search-page': SearchComponent,
+      // 'function-navigation-page': FunctionNavigationComponent
     },
     events: {
       'search-updated': function(search) {

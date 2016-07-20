@@ -4,6 +4,7 @@
 import * as mutationsTypes from '../mutation-types';
 const searchService = require('../../services/function-search');
 const beautify = require('js-beautify').js_beautify;
+const FILE_STATE = require('../../services/parsers/file.state.enum');
 import _ from 'lodash';
 
 const jsBeautifyOptions = {
@@ -15,7 +16,9 @@ const jsBeautifyOptions = {
 
 const newProjectTemplate = {
   path: '',
+  directoryTree: null,
   scanned: false,
+  parsed: FILE_STATE.NOT_PARSED,
   lastScan: null,
   activeView: 0,
   views: [{
@@ -39,13 +42,75 @@ export const state = {
 
 export const mutations = {
 
-  [mutationsTypes.SCAN_COMPLETED] (state, path, functions) {
+  [mutationsTypes.BUILD_DIRECTORY_TREE] (state, path, tree) {
     let activeProject = state.projects[state.activeProject];
     activeProject.path = path;
+    activeProject.directoryTree = tree;
+    if (activeProject.directoryTree.children) {
+      activeProject.directoryTree.opened = true;
+    }
     activeProject.scanned = true;
     activeProject.lastScan = new Date();
-    activeProject.scan.parsedFunctions = functions;
-    activeProject.scan.functionNames = _.map(functions, 'name');
+  },
+
+  [mutationsTypes.TOGGLE_FOLDER] (state, path) {
+    function findPath(item) {
+      if (item.path === path) {
+        item.opened = !item.opened;
+        return true;
+      }
+      else if (item.children) {
+        item.children.some(child => findPath(child));
+      }
+    }
+    findPath(state.projects[state.activeProject].directoryTree);
+  },
+
+  [mutationsTypes.START_PROJECT_PARSING] (state) {
+    state.projects[state.activeProject].parsed = FILE_STATE.PARSING;
+  },
+
+  [mutationsTypes.START_FILE_PARSING] (state, path) {
+    function findPath(item) {
+      if (item.path === path) {
+        item.parsed = FILE_STATE.PARSING;
+        return true;
+      }
+      else if (item.children) {
+        item.children.some(child => findPath(child));
+      }
+    }
+    findPath(state.projects[state.activeProject].directoryTree);
+  },
+
+  [mutationsTypes.ERROR_FILE_PARSING] (state, path) {
+    function findPath(item) {
+      if (item.path === path) {
+        item.parsed = FILE_STATE.PARSING_ERROR;
+        return true;
+      }
+      else if (item.children) {
+        item.children.some(child => findPath(child));
+      }
+    }
+    findPath(state.projects[state.activeProject].directoryTree);
+  },
+
+  [mutationsTypes.END_FILE_PARSING] (state, path) {
+    function findPath(item) {
+      if (item.path === path) {
+        item.parsed = FILE_STATE.PARSED;
+        return true;
+      }
+      else if (item.children) {
+        item.children.some(child => findPath(child));
+      }
+    }
+    findPath(state.projects[state.activeProject].directoryTree);
+  },
+
+  [mutationsTypes.START_PROJECT_PARSING] (state) {
+    state.projects[state.activeProject].parsed = FILE_STATE.PARSED;
   },
 
   [mutationsTypes.SEARCH_FUNCTION] (state, search) {

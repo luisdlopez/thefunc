@@ -1,4 +1,4 @@
-/*eslint no-console: ["error", { allow: ["log"] }] */
+/*eslint no-console: ["error", { allow: ["log","error"] }] */
 
 'use strict';
 
@@ -6,39 +6,42 @@
 // TODO: exclude folders as selected by user (node_modules as recommended)
 // TODO: handle errors!
 
-let dir = require('node-dir');
+var fs = require('fs');
 let parsers = require('../parsers');
+import store from '../../vuex/store';
+import {
+  startFileParsing,
+  endFileParsing,
+  errorFileParsing
+} from '../../vuex/actions';
 
-exports.scanFolder = function scanFolder (folder) {
+exports.parseDirectoryTree = function scanFolder (directoryTree) {
+  // TODO: where should functions be stored?
   let functions = [];
 
-  function fileCallback (error, content, next) {
-    if (error) {
-      // TODO: add errors in a log to show user
-      next();
+  function readChildren(child) {
+    if (child.children) {
+      child.children.forEach(readChildren);
     }
+    else {
+      fs.readFile(child.path, 'utf8', function(error, content) {
+        if (error) console.error(`Error reading file: ${error.message}`);
+        else {
+          // TODO: use another process to avoid UI lock up
+          try {
+            startFileParsing(store, child.path);
+            let parsedFunctions = parsers.parse(content);
+            functions.push(...parsedFunctions);
+            endFileParsing(store, child.path);
+          }
+          catch(parsingError) {
+            errorFileParsing(store, child.path);
+          }
+        }
+      });
 
-    try {
-      let parsedFunctions = parsers.parse(content);
-      functions.push(...parsedFunctions);
-    } catch (error) {
-      // TODO: add errors in a log to show user
     }
-
-    next();
   }
 
-  return new Promise((resolve, reject) => {
-    let options = {
-      match: /.js$/,
-      excludeDir: ['node_modules', 'dist', 'build', 'static']
-    };
-
-    function finishedCallback (error) {
-      if (error) reject(error);
-      resolve(functions);
-    }
-
-    dir.readFiles(folder, options, fileCallback, finishedCallback);
-  });
+  readChildren(directoryTree);
 };

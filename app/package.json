@@ -3,12 +3,10 @@
   "main": "background.js",
   "private": true,
   "dependencies": {
-    "ace-builds": "^1.2.2",
     "babel-runtime": "^5.8.0",
-    "codemirror": "^5.14.2",
     "esprima": "^2.7.2",
+    "font-awesome": "^4.6.3",
     "js-beautify": "^1.6.2",
-    "lodash": "^4.11.1",
-    "node-dir": "^0.1.12"
+    "lodash": "^4.11.1"
   }
 }

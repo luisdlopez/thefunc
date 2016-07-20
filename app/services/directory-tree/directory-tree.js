@@ -4,6 +4,22 @@ const FS = require('fs');
 const PATH = require('path');
 const FILE_STATE = require('../parsers/file.state.enum');
 
+function pathNotSupported(path) {
+  const NAME = PATH.basename(path);
+  const IGNORED_FOLDERS = [
+    'node_modules',
+    '.git',
+    'build',
+    'builds',
+    'dist',
+    'release',
+    'releases'
+  ];
+  return IGNORED_FOLDERS.indexOf(NAME) !== -1 ||
+    NAME.startsWith('.') ||
+    NAME.indexOf('.map') !== -1;
+}
+
 // Properties common to both folders and files
 function itemFactory(path) {
   const name = PATH.basename(path);
@@ -11,7 +27,7 @@ function itemFactory(path) {
     path,
     name,
     parsed: FILE_STATE.NOT_PARSED,
-    opened: false,
+    opened: true // TODO: change it back to false when done
   };
 }
 
@@ -32,6 +48,7 @@ function fileExtensionIsInvalid(acceptedFileExtensions, fileExtension) {
  * @returns {Object} JSON object representing contents of a given path
  */
 module.exports = function directoryTree(path, acceptedFileExtensions) {
+  if (pathNotSupported(path)) return null;
   const item = itemFactory(path);
 
   let stats;
@@ -55,5 +72,6 @@ module.exports = function directoryTree(path, acceptedFileExtensions) {
 
     if (!item.children.length) return null;
   }
+
   return item;
 };

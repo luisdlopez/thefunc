@@ -3,7 +3,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import createLogger from 'vuex/logger';
-import {state, mutations} from './modules/thefunc';
+import { state, mutations } from './modules/thefunc';
 
 Vue.use(Vuex);
 

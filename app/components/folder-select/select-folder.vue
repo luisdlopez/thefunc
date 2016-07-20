@@ -9,11 +9,11 @@
 
     <button type="button"
         @click="scan"
-        :disabled="!path || scanStarted"
+        :disabled="!path || scanning"
         class="ui black basic button scan-folder">
 
-    <span v-if="!scanStarted">Scan</span>
-    <span v-if="scanStarted">Scanning...</span>
+    <span v-if="!scanning">Scan</span>
+    <span v-if="scanning">Scanning...</span>
 
     </button>
 
@@ -22,18 +22,18 @@
 
 <script lang="babel">
   const { dialog } = require('electron').remote;
-  import { startScan } from '../../vuex/actions';
+  import { buildDirectoryTree } from '../../vuex/actions';
 
   export default {
     vuex: {
       actions: {
-        startScan
+        buildDirectoryTree
       }
     },
     data() {
       return {
         path: '',
-        scanStarted: false
+        scanning: false
       };
     },
     computed: {
@@ -44,8 +44,10 @@
     },
     methods: {
       scan: function() {
-        this.scanStarted = true;
-        this.startScan(this.path);
+        this.scanning = true;
+        setTimeout(() => {
+          this.buildDirectoryTree(this.path);
+        }, 100);
       },
       folderSelected: function() {
         const selectedFolder = dialog.showOpenDialog({properties: ['openDirectory']});
