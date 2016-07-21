@@ -15,8 +15,7 @@ function readChildren(child) {
       else {
         try {
           process.send({ action: 'startFileParsing', params: [child.path] });
-          let parsedFunctions = parsers.parse(content);
-          process.send({ action: 'setFileFunctions', params: [child.path, parsedFunctions] });
+          process.send({ action: 'setFileFunctions', params: [child.path, parsers.parse(content)] });
           process.send({ action: 'endFileParsing', params: [child.path] });
         }
         catch(parsingError) {
