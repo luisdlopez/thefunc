@@ -17,6 +17,7 @@ export const startProjectParsing = makeAction(mutationsTypes.START_PROJECT_PARSI
 export const startFileParsing = makeAction(mutationsTypes.START_FILE_PARSING);
 export const endFileParsing = makeAction(mutationsTypes.END_FILE_PARSING);
 export const errorFileParsing = makeAction(mutationsTypes.ERROR_FILE_PARSING);
+export const setFileFunctions = makeAction(mutationsTypes.SET_FILE_FUNCTIONS);
 export const endProjectParsing = makeAction(mutationsTypes.END_PROJECT_PARSING);
 
 export const searchFunction = makeAction(mutationsTypes.SEARCH_FUNCTION);

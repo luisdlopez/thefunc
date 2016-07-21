@@ -27,7 +27,7 @@ function itemFactory(path) {
     path,
     name,
     parsed: FILE_STATE.NOT_PARSED,
-    opened: true // TODO: change it back to false when done
+    opened: false
   };
 }
 

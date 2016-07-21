@@ -96,6 +96,19 @@ export const mutations = {
     findPath(state.projects[state.activeProject].directoryTree);
   },
 
+  [mutationsTypes.SET_FILE_FUNCTIONS] (state, path, functions) {
+    function findPath(item) {
+      if (item.path === path) {
+        item.functions = functions;
+        return true;
+      }
+      else if (item.children) {
+        item.children.some(child => findPath(child));
+      }
+    }
+    findPath(state.projects[state.activeProject].directoryTree);
+  },
+
   [mutationsTypes.END_FILE_PARSING] (state, path) {
     function findPath(item) {
       if (item.path === path) {

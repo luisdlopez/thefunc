@@ -7,10 +7,20 @@ import { state, mutations } from './modules/thefunc';
 
 Vue.use(Vuex);
 
+function getMiddlewares() {
+  if(process.env.NODE_ENV !== 'production') {
+    return [createLogger()];
+  }
+  else {
+    return [];
+  }
+}
+
 const store = new Vuex.Store({
   state,
   mutations,
-  middlewares: [createLogger()]
+  strict: process.env.NODE_ENV !== 'production',
+  middlewares: getMiddlewares()
 });
 
 if (module.hot) {
