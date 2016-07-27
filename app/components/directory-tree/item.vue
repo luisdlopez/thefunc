@@ -1,25 +1,40 @@
 <template>
   <li class="item">
-    <button @click="toggle($event, model.path)" class="clean-button">
-      <i v-if="isFolder && !model.opened" class="fa fa-folder-o" aria-hidden="true">&nbsp;</i>
-      <i v-if="isFolder && model.opened" class="fa fa-folder-open-o" aria-hidden="true">&nbsp;</i>
-      <i v-if="!isFolder" class="fa fa-file-code-o" aria-hidden="true">&nbsp;</i>
+
+    <button v-if="isFolder" @click.stop.prevent="toggleFolder(model.path)" class="clean-button">
+      <i v-if="!model.opened" class="fa fa-folder-o" aria-hidden="true">&nbsp;</i>
+      <i v-if="model.opened" class="fa fa-folder-open-o" aria-hidden="true">&nbsp;</i>
+      {{ model.name }} &nbsp;
+    </button>
+
+    <button v-if="!isFolder" @click.stop.prevent="toggleFile(model.path)" class="clean-button">
+      <i class="fa fa-file-code-o" aria-hidden="true">&nbsp;</i>
       {{ model.name }} &nbsp;
       <i v-if="parsed" class="fa fa-check-square-o parsed" aria-hidden="true"></i>
       <i v-if="parsing" class="fa fa-spinner fa-spin parsing" aria-hidden="true"></i>
       <i v-if="parsingError" class="fa fa-exclamation-circle parsing-error" aria-hidden="true"></i>
       <i v-if="notParsed" class="fa fa-square-o not-parsed" aria-hidden="true"></i>
     </button>
-    <ul v-if="model.opened" v-if="isFolder">
+
+    <ul v-if="isFolder && model.opened">
       <item v-for="model in model.children"
         :model="model">
       </item>
     </ul>
+
+    <ul v-if="!isFolder && model.opened">
+      <div v-for="func in model.functions" @click.stop.prevent="showPreview(func.content)">
+        <i class="fa fa-code" aria-hidden="true"></i>
+        &nbsp;
+        {{ func.name }}
+      </div>
+    </ul>
+
   </li>
 </template>
 
 <script type="text/babel">
-  import { toggleFolder } from '../../vuex/actions';
+  import { toggleFolder, toggleFile, showPreview } from '../../vuex/actions';
   const FILE_STATE = require('../../services/parsers/file.state.enum');
 
   export default {
@@ -29,13 +44,9 @@
     },
     vuex: {
       actions: {
-        toggleFolder
-      }
-    },
-    methods: {
-      toggle(event, path) {
-        event.preventDefault();
-        this.toggleFolder(path);
+        toggleFolder,
+        toggleFile,
+        showPreview
       }
     },
     computed: {

@@ -13,6 +13,7 @@ export const buildDirectoryTree = ({ dispatch }, path) => {
   // TODO: end project parsing action
 };
 export const toggleFolder = makeAction(mutationsTypes.TOGGLE_FOLDER);
+export const toggleFile = makeAction(mutationsTypes.TOGGLE_FILE);
 export const startProjectParsing = makeAction(mutationsTypes.START_PROJECT_PARSING);
 export const startFileParsing = makeAction(mutationsTypes.START_FILE_PARSING);
 export const endFileParsing = makeAction(mutationsTypes.END_FILE_PARSING);

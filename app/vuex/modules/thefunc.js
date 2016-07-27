@@ -40,6 +40,8 @@ export const state = {
   projects: [_.cloneDeepWith(newProjectTemplate)]
 };
 
+// TODO: findPath function is repeated, extract it
+
 export const mutations = {
 
   [mutationsTypes.BUILD_DIRECTORY_TREE] (state, path, tree) {
@@ -54,6 +56,19 @@ export const mutations = {
   },
 
   [mutationsTypes.TOGGLE_FOLDER] (state, path) {
+    function findPath(item) {
+      if (item.path === path) {
+        item.opened = !item.opened;
+        return true;
+      }
+      else if (item.children) {
+        item.children.some(child => findPath(child));
+      }
+    }
+    findPath(state.projects[state.activeProject].directoryTree);
+  },
+
+  [mutationsTypes.TOGGLE_FILE] (state, path) {
     function findPath(item) {
       if (item.path === path) {
         item.opened = !item.opened;
@@ -131,12 +146,16 @@ export const mutations = {
     activeProject.views[0].results = searchService.search(activeProject, search);
   },
 
-  [mutationsTypes.SHOW_PREVIEW] (state, resultIndex, parsedFunctionIndex) {
-    let activeProject = state.projects[state.activeProject];
+  [mutationsTypes.SHOW_PREVIEW] (state, content/*resultIndex, parsedFunctionIndex*/) {
+    // TODO: show preview might need more changed
+    /*let activeProject = state.projects[state.activeProject];
     activeProject.views[0].results = activeProject.views[0].results.map((result, index) => {
       return _.assign({}, result, {clicked: index === resultIndex});
     });
     let formattedContent = beautify(activeProject.scan.parsedFunctions[parsedFunctionIndex].content, jsBeautifyOptions);
+    activeProject.views[0].preview = `\n${formattedContent}`;*/
+    let activeProject = state.projects[state.activeProject];
+    let formattedContent = beautify(content, jsBeautifyOptions);
     activeProject.views[0].preview = `\n${formattedContent}`;
   },
 
