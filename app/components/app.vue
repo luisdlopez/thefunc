@@ -11,6 +11,9 @@
     <div class="project-container" v-if="activeProject.scanned">
       <view-tabs></view-tabs>
       <directory-tree></directory-tree>
+      <preview-container
+        v-if="activeProject.views[0].preview"
+        :function-selected="activeProject.views[0].preview"></preview-container>
       <!--<search-page v-if="activeView === 0" :active-project="activeProject"></search-page>-->
       <!--<function-navigation-page v-if="activeView > 0" :functions="activeViewFunctions"></function-navigation-page>-->
     </div>
@@ -22,6 +25,7 @@
   import ProjectTabsComponent from './project-tabs.vue';
   import ViewTabsComponent from './view-tabs.vue';
   import SelectFolderComponent from './folder-select/select-folder.vue';
+  import previewContainer from './directory-tree/preview-container.vue';
   // TODO: look at these 2 components, possibly replace them
   // import SearchComponent from './function-search-page/function-search-page.vue';
   // import FunctionNavigationComponent from './function-navigation-page/function-navigation-page.vue';
@@ -48,7 +52,8 @@
       'project-tabs': ProjectTabsComponent,
       'select-folder': SelectFolderComponent,
       'view-tabs': ViewTabsComponent,
-      'directory-tree': directoryTreeComponent
+      'directory-tree': directoryTreeComponent,
+      'preview-container': previewContainer
       // 'search-page': SearchComponent,
       // 'function-navigation-page': FunctionNavigationComponent
     },
@@ -76,6 +81,6 @@
   }
 
   .project-container {
-    height: calc(100% - 59px);
+    height: calc(100% - 63px);
   }
 </style>

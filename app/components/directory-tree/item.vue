@@ -1,14 +1,17 @@
 <template>
   <li class="item">
 
+    <!--FOLDER-->
     <button v-if="isFolder" @click.stop.prevent="toggleFolder(model.path)" class="clean-button">
       <i v-if="!model.opened" class="fa fa-folder-o" aria-hidden="true">&nbsp;</i>
       <i v-if="model.opened" class="fa fa-folder-open-o" aria-hidden="true">&nbsp;</i>
       {{ model.name }} &nbsp;
     </button>
 
+    <!--FILE-->
     <button v-if="!isFolder" @click.stop.prevent="toggleFile(model.path)" class="clean-button">
-      <i class="fa fa-file-code-o" aria-hidden="true">&nbsp;</i>
+      <i v-if="model.functions && model.functions.length && !model.opened" class="fa fa-plus" aria-hidden="true">&nbsp;</i>
+      <i v-if="model.functions && model.functions.length && model.opened" class="fa fa-minus" aria-hidden="true">&nbsp;</i>
       {{ model.name }} &nbsp;
       <i v-if="parsed" class="fa fa-check-square-o parsed" aria-hidden="true"></i>
       <i v-if="parsing" class="fa fa-spinner fa-spin parsing" aria-hidden="true"></i>
@@ -16,17 +19,17 @@
       <i v-if="notParsed" class="fa fa-square-o not-parsed" aria-hidden="true"></i>
     </button>
 
+    <!--FOLDER CHILDREN-->
     <ul v-if="isFolder && model.opened">
       <item v-for="model in model.children"
         :model="model">
       </item>
     </ul>
 
+    <!--FILE FUNCTIONS-->
     <ul v-if="!isFolder && model.opened">
       <div v-for="func in model.functions" @click.stop.prevent="showPreview(func.content)">
-        <i class="fa fa-code" aria-hidden="true"></i>
-        &nbsp;
-        {{ func.name }}
+        <i class="fa fa-circle" aria-hidden="true"><span>f</span></i>&nbsp;{{ func.name }}
       </div>
     </ul>
 
@@ -97,5 +100,20 @@
   }
   .parsing-error {
     color: orange;
+  }
+  .fa-plus, .fa-minus {
+    color: #bfbfbf;
+    font-size: smaller;
+  }
+  .fa-circle {
+    color: rgba(255, 12, 24, 0.13);
+  }
+  .fa-circle span {
+    position: relative;
+    left: -9px;
+    top: -1px;
+    font-size: smaller;
+    font-weight: bold;
+    color: rgba(255, 12, 24, 0.62);
   }
 </style>

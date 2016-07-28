@@ -24,7 +24,6 @@
     display: inline-block;
     vertical-align:top;
     width: 59%;
-    height: 100%;
   }
 
   .preview-editor-container {

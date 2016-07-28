@@ -28,7 +28,8 @@
 
 <style>
   .directory-tree-container {
-    height: calc(100% - 63px);
+    height: calc(100% - 54px);
+    display: inline-block;
     width: 40%;
     overflow: auto;
   }
