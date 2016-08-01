@@ -1,16 +1,19 @@
 'use strict';
 
-let _ = require('lodash');
+const shortid = require('shortid');
+const _ = require('lodash');
 
 exports.get = function getFunctionExpressions (content, parsedContent) {
   let functionObjects = findFunctionExpressions(parsedContent);
   return functionObjects.map(functionObject => {
-    let name = `${functionObject.id.name}`;
-    let lines = functionObject.loc.end.line - functionObject.loc.start.line;
-    let func = content.substring(functionObject.range[0], functionObject.range[1]);
+    const id = shortid.generate();
+    const name = `${functionObject.id.name}`;
+    const lines = functionObject.loc.end.line - functionObject.loc.start.line;
+    const func = content.substring(functionObject.range[0], functionObject.range[1]);
     return {
+      id,
       lines,
-      name: name,
+      name,
       content: func
     };
   });

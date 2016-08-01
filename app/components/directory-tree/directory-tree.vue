@@ -2,25 +2,54 @@
   <div class="directory-tree-container">
     <div class="search-field-container">
       <input type="text"
+             v-model="searchInputValue"
+             @keyup="searchFunction(searchInputValue.trim())"
              placeholder="Search a function..."
              class="search-field">
     </div>
-    <ul class="directory-tree">
+
+    <!--Show normal tree if no search has been entered-->
+    <ul class="directory-tree" v-if="!filteredRoot">
       <item :model="root"></item>
     </ul>
+
+    <!--Show filtered tree based on search string-->
+    <ul class="directory-tree" v-if="filteredRoot">
+      <item :model="filteredRoot"></item>
+    </ul>
+
   </div>
 </template>
 
 <script type="text/babel">
+  import { searchFunction } from '../../vuex/actions';
   import item from './item.vue';
 
   export default {
     components: {
       item
     },
+    data() {
+      return {
+        searchInputValue: ''
+      };
+    },
     vuex: {
       getters: {
-        root: state => state.projects[state.activeProject].directoryTree
+        root: state => state.projects[state.activeProject].directoryTree,
+        filteredRoot: state => state.projects[state.activeProject].views[0].filteredDirectoryTree,
+        search: state => state.projects[state.activeProject].views[0].search
+      },
+      actions: {
+        searchFunction
+      }
+    },
+    ready() {
+      this.searchInputValue = this.search;
+    },
+    watch: {
+      'search': function() {
+        this.searchInputValue = this.search;
       }
     }
   };

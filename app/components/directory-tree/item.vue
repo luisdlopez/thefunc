@@ -28,8 +28,8 @@
 
     <!--FILE FUNCTIONS-->
     <ul v-if="!isFolder && model.opened">
-      <div v-for="func in model.functions" @click.stop.prevent="showPreview(func.content)">
-        <i class="fa fa-circle" aria-hidden="true"><span>f</span></i>&nbsp;{{ func.name }}
+      <div v-for="id in model.functions" @click.stop.prevent="showPreview(id)">
+        <i class="fa fa-circle" aria-hidden="true"><span>f</span></i>&nbsp;{{ parsedFunctions[id] && parsedFunctions[id].name }}
       </div>
     </ul>
 
@@ -46,6 +46,9 @@
       model: Object
     },
     vuex: {
+      getters: {
+        parsedFunctions: state => state.projects[state.activeProject].scan.parsedFunctions
+      },
       actions: {
         toggleFolder,
         toggleFile,

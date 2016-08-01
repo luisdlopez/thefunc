@@ -2,37 +2,16 @@
 'use strict';
 
 import * as mutationsTypes from '../mutation-types';
-const searchService = require('../../services/function-search');
 const beautify = require('js-beautify').js_beautify;
 const FILE_STATE = require('../../services/parsers/file.state.enum');
 import _ from 'lodash';
+import newProjectTemplate from './project.template';
 
 const jsBeautifyOptions = {
   indent_size: 2,
   preserve_newlines: true,
   break_chained_methods: true,
   end_with_newline: true
-};
-
-const newProjectTemplate = {
-  path: '',
-  directoryTree: null,
-  scanned: false,
-  parsed: FILE_STATE.NOT_PARSED,
-  lastScan: null,
-  activeView: 0,
-  views: [{
-    title: 'Search',
-    search: '',
-    results: [],
-    preview: ''
-  }],
-  scan: {
-    parsedFunctions: [],
-    functionNames: [],
-    error: [],
-    stats: {}
-  }
 };
 
 export const state = {
@@ -114,13 +93,22 @@ export const mutations = {
   [mutationsTypes.SET_FILE_FUNCTIONS] (state, path, functions) {
     function findPath(item) {
       if (item.path === path) {
-        item.functions = functions;
+        item.functions = functions.map(func => func.id);
         return true;
       }
       else if (item.children) {
         item.children.some(child => findPath(child));
       }
     }
+
+    const parsedFunctionsObject = state.projects[state.activeProject].scan.parsedFunctions;
+    const functionNamesArray = state.projects[state.activeProject].scan.functionNames;
+
+    functions.forEach(func => {
+      parsedFunctionsObject[func.id] = func;
+      functionNamesArray.push(func.name);
+    });
+
     findPath(state.projects[state.activeProject].directoryTree);
   },
 
@@ -143,19 +131,61 @@ export const mutations = {
 
   [mutationsTypes.SEARCH_FUNCTION] (state, search) {
     let activeProject = state.projects[state.activeProject];
-    activeProject.views[0].results = searchService.search(activeProject, search);
+    activeProject.views[0].search = search;
+
+    if (!search) {
+      activeProject.views[0].filteredDirectoryTree = null;
+      return;
+    }
+
+    // find function names
+    const includesSearch = func => func.name.toLowerCase().includes(search) ? func.id : null;
+    const functionsFound = _.map(activeProject.scan.parsedFunctions, includesSearch)
+      .filter(found => !!found);
+
+    // copy directory tree
+    let filteredDirectoryTree = _.cloneDeepWith(activeProject.directoryTree);
+
+    // remove items that don't match found functions
+    function findItems(item) {
+      if (item.children) {
+        item.children = item.children.map(findItems);
+        item.children = item.children.filter(child => !!child);
+        if (item.children.length) {
+          item.opened = true;
+          return item;
+        }
+        return null;
+      }
+      else {
+        if (item.functions) {
+          item.functions = item.functions.map(id => {
+            if (functionsFound.indexOf(id) !== -1) {
+              return id;
+            }
+            return null;
+          });
+          item.functions = item.functions.filter(func => !!func);
+          if (item.functions.length) {
+            item.opened = true;
+            return item;
+          }
+          return null;
+        }
+        else {
+          return null;
+        }
+      }
+    }
+
+    const results = findItems(filteredDirectoryTree);
+    activeProject.views[0].filteredDirectoryTree = results;
   },
 
-  [mutationsTypes.SHOW_PREVIEW] (state, content/*resultIndex, parsedFunctionIndex*/) {
-    // TODO: show preview might need more changed
-    /*let activeProject = state.projects[state.activeProject];
-    activeProject.views[0].results = activeProject.views[0].results.map((result, index) => {
-      return _.assign({}, result, {clicked: index === resultIndex});
-    });
-    let formattedContent = beautify(activeProject.scan.parsedFunctions[parsedFunctionIndex].content, jsBeautifyOptions);
-    activeProject.views[0].preview = `\n${formattedContent}`;*/
-    let activeProject = state.projects[state.activeProject];
-    let formattedContent = beautify(content, jsBeautifyOptions);
+  [mutationsTypes.SHOW_PREVIEW] (state, id) {
+    const activeProject = state.projects[state.activeProject];
+    const func = activeProject.scan.parsedFunctions[id];
+    let formattedContent = beautify(func.content, jsBeautifyOptions);
     activeProject.views[0].preview = `\n${formattedContent}`;
   },
 
