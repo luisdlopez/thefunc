@@ -14,7 +14,7 @@ the func's UI approach is different from code bubbles. It does not use a _canvas
 
 For the moment, the application is capable of scanning js files (it ignores certain things, like the node_module folder), generating a directory tree and allows the user to search detected functions.
 
-![directory tree](https://raw.githubusercontent.com/luisdlopez/thefunc/master/docs/01-thefunc.gif)
+<img src="https://raw.githubusercontent.com/luisdlopez/thefunc/master/docs/01-thefunc.gif" alt="Directory Tree" height="480" width="720">
 
 The look and feel is far from final, and tests have not been written yet. It's all coming though. 
 
