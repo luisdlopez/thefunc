@@ -14,9 +14,10 @@ the func's UI approach is different from code bubbles. It does not use a _canvas
 
 For the moment, the application is capable of scanning js files (it ignores certain things, like the node_module folder), generating a directory tree and allows the user to search detected functions.
 
-<img src="https://raw.githubusercontent.com/luisdlopez/thefunc/master/docs/01-thefunc.gif" alt="Directory Tree" height="480" width="720">
+> <img src="https://raw.githubusercontent.com/luisdlopez/thefunc/master/docs/01-thefunc.gif" alt="Directory Tree" height="480" width="720">
+> _opening a project, scanning it and looking at generated directory tree_
 
-The look and feel is far from final, and tests have not been written yet. It's all coming though. 
+The look and feel is far from final, function navigation is almost done, and tests have not been written yet.
 
 ### Development
 
@@ -32,3 +33,10 @@ This app uses the following tools:
 - Semantic UI
 
 The whole project structure is based on [electron-boilerplate-vue](https://github.com/bradstewart/electron-boilerplate-vue)
+
+To run the project locally, simply run the commands:
+
+```
+npm install
+npm start
+```
