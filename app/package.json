@@ -3,11 +3,11 @@
   "main": "background.js",
   "private": true,
   "dependencies": {
-    "babel-runtime": "^5.8.0",
-    "esprima": "^2.7.2",
-    "font-awesome": "^4.6.3",
-    "js-beautify": "^1.6.2",
-    "lodash": "^4.11.1",
-    "shortid": "^2.2.6"
+    "babel-runtime": "5.8.0",
+    "esprima": "2.7.2",
+    "font-awesome": "4.6.3",
+    "js-beautify": "1.6.2",
+    "lodash": "4.11.1",
+    "shortid": "2.2.6"
   }
 }
