@@ -12,7 +12,9 @@ import * as actions from '../../vuex/actions';
 exports.parseDirectoryTree = function scanFolder (directoryTree) {
 
   var cp = require('child_process');
-  var child = cp.fork('app/services/scanner/child-process.js', [JSON.stringify(directoryTree)]);
+  var child = cp.fork('app/services/scanner/child-process.js');
+
+  child.send(directoryTree);
 
   child.on('message', function({ action, params }) {
     actions[action](store, ...params);

@@ -27,4 +27,6 @@ function readChildren(child) {
   }
 }
 
-readChildren(JSON.parse(process.argv[2]));
+process.on('message', directoryTree => {
+  readChildren(directoryTree);
+});
