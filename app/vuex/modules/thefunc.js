@@ -214,9 +214,9 @@ export const mutations = {
     activeProject.activeView = index - 1;
   },
 
-  [mutationsTypes.START_FUNCTION_NAVIGATION] (state, parsedFunctionIndex) {
+  [mutationsTypes.START_FUNCTION_NAVIGATION] (state, functionId) {
     let activeProject = state.projects[state.activeProject];
-    let func = activeProject.scan.parsedFunctions[parsedFunctionIndex];
+    let func = activeProject.scan.parsedFunctions[functionId];
     let formattedContent = beautify(func.content, jsBeautifyOptions);
 
     activeProject.views.push({

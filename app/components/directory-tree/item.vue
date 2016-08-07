@@ -28,7 +28,8 @@
 
     <!--FILE FUNCTIONS-->
     <ul v-if="!isFolder && model.opened">
-      <div v-for="id in model.functions" @click.stop.prevent="showPreview(id)">
+      <div v-for="id in model.functions" @click.stop.prevent="showPreview(id)"
+            @dblclick.stop.prevent="startFunctionNavigation(id)">
         <i class="fa fa-circle" aria-hidden="true"><span>f</span></i>&nbsp;{{ parsedFunctions[id] && parsedFunctions[id].name }}
       </div>
     </ul>
@@ -37,7 +38,7 @@
 </template>
 
 <script type="text/babel">
-  import { toggleFolder, toggleFile, showPreview } from '../../vuex/actions';
+  import { toggleFolder, toggleFile, showPreview, startFunctionNavigation } from '../../vuex/actions';
   const FILE_STATE = require('../../services/parsers/file.state.enum');
 
   export default {
@@ -52,7 +53,8 @@
       actions: {
         toggleFolder,
         toggleFile,
-        showPreview
+        showPreview,
+        startFunctionNavigation
       }
     },
     computed: {

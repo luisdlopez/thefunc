@@ -9,13 +9,19 @@
 
     <!--Views for active, scanned project-->
     <div class="project-container" v-if="activeProject.scanned">
+
+      <!--Tabs for either function search or opened functions-->
       <view-tabs></view-tabs>
-      <directory-tree></directory-tree>
+
+      <!--Search tab-->
+      <directory-tree v-if="activeView === 0"></directory-tree>
       <preview-container
-        v-if="activeProject.views[0].preview"
+        v-if="activeView === 0 && activeProject.views[0].preview"
         :function-selected="activeProject.views[0].preview"></preview-container>
-      <!--<search-page v-if="activeView === 0" :active-project="activeProject"></search-page>-->
-      <!--<function-navigation-page v-if="activeView > 0" :functions="activeViewFunctions"></function-navigation-page>-->
+
+      <!--Function navigation page-->
+      <function-navigation-page v-if="activeView > 0" :functions="activeViewFunctions"></function-navigation-page>
+
     </div>
 
   </div>
@@ -27,8 +33,7 @@
   import SelectFolderComponent from './folder-select/select-folder.vue';
   import previewContainer from './directory-tree/preview-container.vue';
   // TODO: look at these 2 components, possibly replace them
-  // import SearchComponent from './function-search-page/function-search-page.vue';
-  // import FunctionNavigationComponent from './function-navigation-page/function-navigation-page.vue';
+  import FunctionNavigationComponent from './function-navigation-page/function-navigation-page.vue';
   import directoryTreeComponent from './directory-tree/directory-tree.vue';
   import * as actions from '../vuex/actions';
 
@@ -53,9 +58,8 @@
       'select-folder': SelectFolderComponent,
       'view-tabs': ViewTabsComponent,
       'directory-tree': directoryTreeComponent,
-      'preview-container': previewContainer
-      // 'search-page': SearchComponent,
-      // 'function-navigation-page': FunctionNavigationComponent
+      'preview-container': previewContainer,
+      'function-navigation-page': FunctionNavigationComponent
     },
     events: {
       'search-updated': function(search) {
