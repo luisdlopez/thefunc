@@ -12,7 +12,7 @@
 
         <div class="view-editor-container"
               v-for="(funcIndex, func) in column" track-by="$index"
-              v-bind:style="{ height: (func.content.split('\n').length * 16 + 32) + 'px' }">
+              v-bind:style="{ height: (func.content.split('\n').length * 16 + 16) + 'px' }">
 
           <ace-navigation :func="func" :position="[columnIndex, funcIndex]"></ace-navigation>
 

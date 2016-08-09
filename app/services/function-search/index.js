@@ -1,5 +1,7 @@
 'use strict';
 
+import _ from 'lodash';
+
 // returns mapping function for approximate function search
 function matchToSearch(search) {
   const formattedSearch = search.toLowerCase();
@@ -17,7 +19,7 @@ function matchToSearch(search) {
 // returns mapping function for exact search
 function mapToFunctionName(functionName) {
   return (parsedFunction, index) => {
-    const match = parsedFunction.name.includes(functionName);
+    const match = parsedFunction.name === functionName;
     if (match) {
       // return { name: parsedFunction.name, index };
       return { func: parsedFunction, index };
@@ -36,6 +38,6 @@ exports.search = (activeProject, search) => {
 // called from ace editor, function navigation (exact search)
 exports.navigate = (activeProject, functionName) => {
   const parsedFunctions = activeProject.scan.parsedFunctions;
-  let results = parsedFunctions.map(mapToFunctionName(functionName));
+  let results = _.map(parsedFunctions, mapToFunctionName(functionName));
   return results.filter(result => !!result);
 };
