@@ -12,17 +12,13 @@ This type of interface makes reading code easy, specially in cases where you're 
 
 the func's UI approach is different from code bubbles. It does not use a _canvas_, as it is not a particular effective approach when dealing with low resolution screens.
 
-For the moment, the application is capable of scanning js files (it ignores certain things, like the node_module folder), generating a directory tree and allows the user to search detected functions.
+For the moment, the application is capable of scanning js files (it ignores certain things, like the node_module folder), generating a directory tree, search detected functions, previewing functions and actual function call navigation.
 
-> <video src="https://raw.githubusercontent.com/luisdlopez/thefunc/master/docs/thefunc-demo.webm" autoplay loop>
-  Sorry, your browser doesn't support embedded videos,
-  but don't worry, you can <a href="https://raw.githubusercontent.com/luisdlopez/thefunc/master/docs/thefunc-demo.webm">download it</a>
-  and watch it with your favorite video player!
-</video>
+> <img src="https://raw.githubusercontent.com/luisdlopez/thefunc/master/docs/thefunc-demo.gif" alt="thefunc" height="480" width="720">
 
-> _opening a project, scanning it and looking at generated directory tree_
+> _opening a project, scanning it, looking at generated directory tree, opening function and navigating through function calls_
 
-The look and feel is far from final, function navigation is almost done, and tests have not been written yet.
+The look and feel is far from final, function navigation functional (but not finished), and tests have not been written yet.
 
 ### Development
 
