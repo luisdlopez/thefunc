@@ -4,9 +4,10 @@
     <a class="item"
           v-for="path in projects"
           track-by="$index"
-          :class="{ 'active': activeIndex === $index }">
+          :class="{ 'active': activeIndex === $index }"
+          @click.stop.prevent="changeActiveProject($index)">
 
-      <div @click.stop.prevent="changeActiveProject($index)">
+      <div>
         {{ path.split('/').pop()  || 'New Project' }}
       </div>
 
@@ -16,7 +17,7 @@
 
     </a>
 
-    <a class="item"
+    <a class="item open-new-project"
           @click.stop.prevent="openNewProject()">
       <i class="plus square outline icon"></i>
     </a>
@@ -46,9 +47,50 @@
   };
 </script>
 
-<style>
+<style lang="scss" scoped>
+$text-active-color: #F8F8F2;
+$background-active-tab: #181A1F;
+$text-inactive-color: #616772;
+$active-tab-border-color: #528BFF;
+
+.ui.secondary.pointing.menu {
+  margin-bottom: 0px;
+
+  .item {
+    color: $text-inactive-color;
+    border-bottom: none;
+
+    &:hover {
+      color: $text-inactive-color !important;
+    }
+  }
+
+  .active.item {
+    color: $text-active-color;
+    background-color: $background-active-tab;
+    border-bottom: none;
+    border-left: 2px solid;
+    border-color: $active-tab-border-color;
+
+    &:hover {
+      color: $text-active-color !important;
+      background-color: $background-active-tab;
+      border-color: $active-tab-border-color;
+    }
+  }
+
   .close-project-icon {
     float: right;
-    margin-left: 15px !important;
+    margin-left: 15px;
   }
+
+  .open-new-project {
+    color: $text-active-color;
+    margin-bottom: -3px;
+
+    &:hover {
+      color: $text-active-color !important;
+    }
+  }
+}
 </style>

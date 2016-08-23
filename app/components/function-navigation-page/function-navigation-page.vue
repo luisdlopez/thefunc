@@ -12,7 +12,7 @@
 
         <div class="view-editor-container"
               v-for="(funcIndex, func) in column" track-by="$index"
-              v-bind:style="{ height: (func.content.split('\n').length * 16 + 16) + 'px' }">
+              v-bind:style="{ height: (func.content.split('\n').length * 14 + 1) + 'px' }">
 
           <ace-navigation :func="func" :position="[columnIndex, funcIndex]"></ace-navigation>
 
@@ -36,13 +36,15 @@
   };
 </script>
 
-<style>
-  .function-navigation-page-container {
-    height: calc(100% - 49px);
-    width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-  }
+<style lang="scss" scoped>
+$background-color: #181A1F;
+
+.function-navigation-page-container {
+  background-color: $background-color;
+  height: 100%;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
 
   .view-container {
     white-space: nowrap;
@@ -52,15 +54,16 @@
   .column {
     overflow-y: auto;
     height: inherit;
-    min-width: 560px;
+    min-width: 620px;
     display: inline-block;
     vertical-align: top;
-    padding: 5px;
+    padding: 0 5px;
   }
 
   .view-editor-container {
     display: block;
     position: relative;
+    margin-bottom: 20px;
   }
 
   .highlight-function-call {
@@ -69,4 +72,5 @@
     color: orange !important;
     text-decoration: underline;
   }
+}
 </style>

@@ -55,13 +55,14 @@
   };
 </script>
 
-<style>
-  .directory-tree-container {
-    height: calc(100% - 54px);
-    display: inline-block;
-    width: 40%;
-    overflow: auto;
-  }
+<style lang="scss" scoped>
+.directory-tree-container {
+  padding: 5px;
+  background-color: #000000;
+  height: calc(100% - 3px);
+  display: inline-block;
+  width: 40%;
+  overflow: auto;
 
   .search-field-container {
     width: 80%;
@@ -77,10 +78,11 @@
     vertical-align: middle;
     box-sizing: border-box;
     width: 100%;
-    color: #333 !important;
+    background-color: #181A1F;
   }
 
   .directory-tree {
     padding-left: 0px;
   }
+}
 </style>

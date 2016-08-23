@@ -30,7 +30,7 @@
             readOnly: false,
             showGutter: true
           });
-          // this.editor.setTheme('ace/theme/monokai');
+          this.editor.setTheme('ace/theme/ambiance');
           this.editor.session.setMode('ace/mode/javascript');
         },
 

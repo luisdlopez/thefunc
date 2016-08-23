@@ -9,19 +9,19 @@
 
     <!--Views for active, scanned project-->
     <div class="project-container" v-if="activeProject.scanned">
-
       <!--Tabs for either function search or opened functions-->
       <view-tabs></view-tabs>
 
-      <!--Search tab-->
-      <directory-tree v-if="activeView === 0"></directory-tree>
-      <preview-container
-        v-if="activeView === 0 && activeProject.views[0].preview"
-        :function-selected="activeProject.views[0].preview"></preview-container>
+      <div class="views-container">
+        <!--Search tab-->
+        <directory-tree v-if="activeView === 0"></directory-tree>
+        <preview-container
+          v-if="activeView === 0 && activeProject.views[0].preview"
+          :function-selected="activeProject.views[0].preview"></preview-container>
 
-      <!--Function navigation page-->
-      <function-navigation-page v-if="activeView > 0" :functions="activeViewFunctions"></function-navigation-page>
-
+        <!--Function navigation page-->
+        <function-navigation-page v-if="activeView > 0" :functions="activeViewFunctions"></function-navigation-page>
+      </div>
     </div>
 
   </div>
@@ -32,7 +32,6 @@
   import ViewTabsComponent from './view-tabs.vue';
   import SelectFolderComponent from './folder-select/select-folder.vue';
   import previewContainer from './directory-tree/preview-container.vue';
-  // TODO: look at these 2 components, possibly replace them
   import FunctionNavigationComponent from './function-navigation-page/function-navigation-page.vue';
   import directoryTreeComponent from './directory-tree/directory-tree.vue';
   import * as actions from '../vuex/actions';
@@ -78,13 +77,25 @@
   };
 </script>
 
-<style>
-  #app {
-    height:100%;
-    margin:0;
-  }
+<style lang="scss">
+$background-color: #000000;
+$background-views-color: #181A1F;
+$text-color: #F8F8F2;
+
+#app {
+  background-color: $background-color;
+  color: $text-color;
+  height: 100%;
+  margin: 0;
 
   .project-container {
-    height: calc(100% - 63px);
+    height: calc(100% - 40px);
+
+    .views-container {
+      height: calc(100% - 40px);
+      background-color: $background-views-color;
+      padding: 5px;
+    }
   }
+}
 </style>

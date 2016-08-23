@@ -59,13 +59,21 @@
   };
 </script>
 
-<style>
-  .select-folder-container {
-    height: calc(100% - 49px);
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    align-items: center;
+<style lang="scss">
+$background-color: #181A1F;
+$text-color: #F8F8F2;
+
+.select-folder-container {
+  background-color: $background-color;
+  height: calc(100% - 40px);
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+
+  .ui.basic.black.button {
+    color: $text-color !important;
+    box-shadow: 0px 0px 0px 1px $text-color inset !important;
   }
 
   .file-upload,
@@ -86,4 +94,5 @@
     opacity: 0;
     filter: alpha(opacity=0);
   }
+}
 </style>

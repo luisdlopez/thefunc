@@ -19,15 +19,16 @@
   };
 </script>
 
-<style>
-  .preview-container {
-    display: inline-block;
-    vertical-align:top;
-    width: 59%;
-  }
+<style lang="scss" scoped>
+.preview-container {
+  padding: 0 5px;
+  display: inline-block;
+  vertical-align:top;
+  width: 59%;
 
   .preview-editor-container {
     position: relative;
     width: 100%;
   }
+}
 </style>
