@@ -5,14 +5,21 @@
 
 </template>
 
-<style>
-  .preview-editor {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
+<style lang="scss">
+.preview-editor {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.highlight-function-call {
+  pointer-events: auto;
+  cursor: pointer;
+  color: orange !important;
+  text-decoration: underline;
+}
 </style>
 
 <script type="text/babel">
@@ -91,7 +98,8 @@
           this.editor.setOptions({
             maxLines: 100,
             readOnly: false,
-            showGutter: true
+            showGutter: true,
+            enableMultiselect: false
           });
           this.editor.setTheme('ace/theme/ambiance');
           this.editor.session.setMode('ace/mode/javascript');

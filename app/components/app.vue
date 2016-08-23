@@ -89,10 +89,10 @@ $text-color: #F8F8F2;
   margin: 0;
 
   .project-container {
-    height: calc(100% - 40px);
+    height: calc(100% - 34.28px);
 
     .views-container {
-      height: calc(100% - 40px);
+      height: calc(100% - 34.28px);
       background-color: $background-views-color;
       padding: 5px;
     }

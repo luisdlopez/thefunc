@@ -28,7 +28,8 @@
           this.editor.setOptions({
             maxLines: 100,
             readOnly: false,
-            showGutter: true
+            showGutter: true,
+            enableMultiselect: false
           });
           this.editor.setTheme('ace/theme/ambiance');
           this.editor.session.setMode('ace/mode/javascript');

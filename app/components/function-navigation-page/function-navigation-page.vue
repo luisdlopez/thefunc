@@ -65,12 +65,5 @@ $background-color: #181A1F;
     position: relative;
     margin-bottom: 20px;
   }
-
-  .highlight-function-call {
-    pointer-events: auto;
-    cursor: pointer;
-    color: orange !important;
-    text-decoration: underline;
-  }
 }
 </style>
