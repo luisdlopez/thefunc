@@ -6,7 +6,7 @@
 // TODO: exclude folders as selected by user (node_modules as recommended)
 // TODO: handle errors!
 
-const fs = require('fs');
+var fs = require('graceful-fs');
 const parsers = require('../parsers');
 
 function readChildren(child) {
@@ -20,7 +20,6 @@ function readChildren(child) {
         parsers.parse(child.path, content);
       }
     });
-
   }
 }
 
