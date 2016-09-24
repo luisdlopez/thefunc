@@ -7,7 +7,14 @@ let jsParser = require('./js');
 
 exports.parse = function parse (path, content) {
   actions.startFileParsing(store, path);
-  actions.setFileFunctions(store, path, jsParser.getFunctions(content));
-  actions.endFileParsing(store, path);
-  return;
+  jsParser
+    .getFunctions(path, content)
+    .then(functions => {
+      actions.setFileFunctions(store, path, functions);
+      actions.endFileParsing(store, path);
+    })
+    .catch(error => {
+      console.error(error);
+      actions.errorFileParsing(store, path);
+    });
 };
