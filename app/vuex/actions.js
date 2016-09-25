@@ -5,13 +5,14 @@ import directoryTree from '../services/directory-tree/directory-tree';
 import scanner from '../services/scanner';
 
 export const buildDirectoryTree = ({ dispatch }, path) => {
-  const fileExtensions = ['.js'];
-  const tree = directoryTree(path, fileExtensions);
+  const { tree, count } = directoryTree(path);
   dispatch(mutationsTypes.BUILD_DIRECTORY_TREE, path, tree);
+  dispatch(mutationsTypes.UPDATE_PROJECT_STATS, count);
   // TODO: start project parsing action
   scanner.parseDirectoryTree(tree);
   // TODO: end project parsing action
 };
+
 export const toggleFolder = makeAction(mutationsTypes.TOGGLE_FOLDER);
 export const toggleFile = makeAction(mutationsTypes.TOGGLE_FILE);
 export const startProjectParsing = makeAction(mutationsTypes.START_PROJECT_PARSING);

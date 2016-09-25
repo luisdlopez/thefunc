@@ -34,6 +34,11 @@ export const mutations = {
     activeProject.lastScan = new Date();
   },
 
+  [mutationsTypes.UPDATE_PROJECT_STATS] (state, stats) {
+    let activeProject = state.projects[state.activeProject];
+    activeProject.scan.stats = stats;
+  },
+
   [mutationsTypes.TOGGLE_FOLDER] (state, path) {
     function findPath(item) {
       if (item.path === path) {
